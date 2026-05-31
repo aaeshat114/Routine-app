@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kids Routine App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <button id="global-nav-toggle" class="nav-toggle"></button>
+
+  <div id="view-kids-hub" class="view active kids-theme">
+    <h1>My Routines</h1>
+    <div id="kids-routine-grid" class="grid-container"></div>
+  </div>
+
+  <div id="view-active-routine" class="view kids-theme">
+    <div id="routine-container" class="split-screen-container"></div>
+  </div>
+
+  <div id="view-parent-dash" class="view parent-theme hidden">
+    <h1>Dashboard</h1>
+    <div class="panel">
+      <h2>Profiles</h2>
+      <div id="profile-list"></div>
+      <input type="text" id="new-profile-name" placeholder="Child's Name">
+      <button id="btn-add-profile">Add Child</button>
+    </div>
+    <div class="panel">
+      <h2>Routines</h2>
+      <div id="parent-routine-list"></div>
+      <button id="btn-new-routine">Create New Routine</button>
+    </div>
+  </div>
+
+  <div id="view-routine-builder" class="view parent-theme hidden">
+    <h1>Routine Builder</h1>
+    <input type="text" id="builder-routine-name" placeholder="Routine Name">
+    <div id="builder-task-list"></div>
+    <button id="btn-add-task">Add Task</button>
+    <button id="btn-save-routine" class="primary">Save Routine</button>
+  </div>
+
+  <div id="modal-recovery" class="modal hidden">
+    <div class="modal-content kids-theme">
+      <h2>Resume Routine?</h2>
+      <p>You were in the middle of a routine.</p>
+      <button id="btn-resume-session" class="kid-btn">Resume</button>
+      <button id="btn-scrap-session" class="kid-btn tilted">Scrap Session</button>
+    </div>
+  </div>
+
+  <div id="modal-gate" class="modal hidden">
+    <div class="modal-content parent-theme">
+      <button class="close-modal">X</button>
+      <h2>Parent Unlock</h2>
+      <p>Tap the prime number to enter.</p>
+      <div id="gate-grid" class="grid-3x3"></div>
+    </div>
+  </div>
+
+  <div id="modal-participant" class="modal hidden">
+    <div class="modal-content kids-theme">
+      <button class="close-modal">X</button>
+      <h2>Who is doing this?</h2>
+      <div id="participant-list"></div>
+      <button id="btn-start-routine" class="kid-btn">Start</button>
+    </div>
+  </div>
+
+  <div id="modal-confirm" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="confirm-title">Are you sure?</h2>
+      <button id="btn-confirm-yes" class="kid-btn">Yes</button>
+      <button id="btn-confirm-no" class="kid-btn tilted">No</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
