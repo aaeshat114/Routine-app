@@ -1,0 +1,63 @@
+:root {
+  --bg-parent: #f4f5f7;
+  --text-parent: #333;
+  --bg-kids: #e0f7fa;
+  --text-kids: #006064;
+  --kid-btn: #ff9800;
+  --kid-btn-hover: #fb8c00;
+  --kid-btn-radius: 35px;
+  --font-kids: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  --font-parent: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body, html { width: 100%; height: 100%; overflow: hidden; }
+
+.view { width: 100%; height: 100%; position: absolute; top: 0; left: 0; overflow-y: auto; padding: 20px; transition: opacity 0.3s; }
+.hidden { display: none !important; opacity: 0; pointer-events: none; }
+.active { display: block; opacity: 1; }
+
+.nav-toggle { position: fixed; top: 15px; right: 15px; width: 50px; height: 50px; border-radius: 25px; z-index: 1000; cursor: pointer; border: none; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 24px; }
+.nav-toggle::after { content: '⚙️'; }
+.parent-theme .nav-toggle::after { content: '🏠'; }
+
+/* Parent Theme */
+.parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
+.panel { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.parent-theme input, .parent-theme button { padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; }
+.parent-theme button { background: #e0e0e0; cursor: pointer; }
+.parent-theme button.primary { background: #2196f3; color: white; border: none; }
+
+/* Kids Theme */
+.kids-theme { background: var(--bg-kids); color: var(--text-kids); font-family: var(--font-kids); text-align: center; }
+.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+.routine-card { background: #fff; border-radius: 20px; padding: 30px; font-size: 24px; cursor: pointer; box-shadow: 0 8px 15px rgba(0,0,0,0.1); transition: transform 0.2s; border: 4px solid #b2ebf2; }
+.routine-card:active { transform: scale(0.95); }
+
+.kid-btn { background: var(--kid-btn); color: white; border: none; padding: 15px 30px; font-size: 20px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 10px; box-shadow: 0 6px 0 #e65100; transition: all 0.1s; }
+.kid-btn:active { transform: translateY(6px); box-shadow: none; }
+.kid-btn.tilted { transform: rotate(-3deg); background: #ff5252; box-shadow: 0 6px 0 #d50000; }
+.kid-btn.tilted:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
+
+/* Modals */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.modal-content { background: #fff; padding: 40px; border-radius: 20px; position: relative; min-width: 300px; text-align: center; }
+.close-modal { position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; font-weight: bold; cursor: pointer; }
+.grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+.grid-3x3 button { padding: 20px; font-size: 24px; border-radius: 10px; background: #eee; border: none; cursor: pointer; }
+
+/* Split Screen Execution */
+.split-screen-container { display: flex; width: 100%; height: 100vh; }
+.partition { flex: 1; display: flex; flex-direction: column; padding: 20px; border: 4px solid #26c6da; border-radius: 20px; margin: 10px; background-size: cover; background-position: center; position: relative; overflow: hidden; }
+.partition .header-bar { font-size: 32px; font-weight: bold; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 15px; margin-bottom: 10px; text-align: center; }
+.timer-bar { height: 20px; background: #ddd; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.timer-fill { height: 100%; background: #4caf50; width: 100%; transition: width 1s linear; }
+.partition-controls { display: flex; justify-content: center; flex-wrap: wrap; margin-top: auto; }
+
+/* Overtime Animation */
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); background: #ff1744; box-shadow: 0 0 20px #ff1744; } 100% { transform: scale(1); } }
+.btn-finish.overtime { animation: pulse 1s infinite; }
+
+/* Responsive Orientations */
+@media (orientation: landscape) { .split-screen-container { flex-direction: row; } }
+@media (orientation: portrait) { .split-screen-container { flex-direction: column; } }
