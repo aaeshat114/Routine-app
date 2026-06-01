@@ -304,6 +304,24 @@ function renderBuilder() {
   });
 }
 
+window.openImagePicker = (index) => {
+  currentTaskImageIndex = index;
+  const grid = document.getElementById('image-picker-grid');
+  grid.innerHTML = '';
+  PRELOADED_IMAGES.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'image-option';
+    img.onclick = () => {
+      currentEditingRoutine.tasks[currentTaskImageIndex].img = src;
+      document.getElementById('modal-image-picker').classList.add('hidden');
+      renderBuilder();
+    };
+    grid.appendChild(img);
+  });
+  document.getElementById('modal-image-picker').classList.remove('hidden');
+};
+
 
 document.getElementById('btn-add-task').onclick = () => {
   currentEditingRoutine.tasks.push({ name: 'New Task', minTime: 0, maxTime: 0, skipBehavior: 'none', img: '' });
