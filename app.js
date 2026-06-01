@@ -477,6 +477,16 @@ class RoutineInstance {
   }
 
   renderTask() {
+    renderTask() {
+    if (this.currentTask.img) {
+      this.container.style.backgroundImage = `url('${this.currentTask.img}')`;
+      this.container.style.backgroundColor = 'rgba(255,255,255,0.4)';
+      this.container.style.backgroundBlendMode = 'overlay';
+    } else {
+      this.container.style.backgroundImage = 'none';
+      this.container.style.backgroundColor = 'transparent';
+    }
+
     this.container.innerHTML = `
       <div class="header-bar">${this.profile.name}: ${this.currentTask.name}</div>
       ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
