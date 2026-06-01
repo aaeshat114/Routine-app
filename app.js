@@ -282,6 +282,7 @@ function renderBuilder() {
   currentEditingRoutine.tasks.forEach((t, i) => {
     const div = document.createElement('div');
     div.className = 'panel';
+    const imgName = t.img ? t.img.split('/').pop() : 'No image';
     div.innerHTML = `
       <input type="text" value="${t.name}" onchange="currentEditingRoutine.tasks[${i}].name = this.value" placeholder="Task Name">
       <input type="number" value="${t.minTime}" onchange="currentEditingRoutine.tasks[${i}].minTime = parseInt(this.value)" placeholder="Min Time (sec)">
@@ -291,6 +292,10 @@ function renderBuilder() {
         <option value="skip" ${t.skipBehavior === 'skip' ? 'selected' : ''}>Skip Completely</option>
         <option value="defer" ${t.skipBehavior === 'defer' ? 'selected' : ''}>Skip & Defer</option>
       </select>
+      <div style="margin: 10px 0;">
+        <button class="btn-choose-img" onclick="openImagePicker(${i})">Choose Image</button>
+        <span class="task-img-label">${imgName}</span>
+      </div>
       <button onclick="moveTask(${i}, -1)">Up</button>
       <button onclick="moveTask(${i}, 1)">Down</button>
       <button onclick="removeTask(${i})">Del</button>
@@ -298,6 +303,7 @@ function renderBuilder() {
     tList.appendChild(div);
   });
 }
+
 
 document.getElementById('btn-add-task').onclick = () => {
   currentEditingRoutine.tasks.push({ name: 'New Task', minTime: 0, maxTime: 0, skipBehavior: 'none', img: '' });
