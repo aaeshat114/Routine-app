@@ -75,6 +75,9 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let globalBGM = null;
 let bgmType = 'standard'; // 'standard' or 'urgent'
 
+const bgmGainNode = audioCtx.createGain();
+bgmGainNode.connect(audioCtx.destination);
+
 const AUDIO_PATHS = {
   standard: 'assets/audio/bgm-standard.mp3',
   urgent: 'assets/audio/bgm-urgent.mp3',
@@ -105,10 +108,14 @@ function playBGM(type) {
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffers[type];
   source.loop = true;
-  source.connect(audioCtx.destination);
+  source.connect(bgmGainNode);
   source.start(0);
   globalBGM = source;
   bgmType = type;
+  
+  // Ensure volume is reset to full when a new BGM track starts
+  bgmGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+  bgmGainNode.gain.setValueAtTime(1.0, audioCtx.currentTime);
 }
 
 function stopBGM() {
@@ -128,6 +135,20 @@ function playSFX(type, panValue = 0) {
   } else {
     source.connect(audioCtx.destination);
   }
+
+  // Audio Ducking: Lower BGM volume when SFX plays, then fade back in
+  if (globalBGM) {
+    const t = audioCtx.currentTime;
+    bgmGainNode.gain.cancelScheduledValues(t);
+    bgmGainNode.gain.linearRampToValueAtTime(0.2, t + 0.1); // Fade down to 20% over 100ms
+
+    source.onended = () => {
+      const endTime = audioCtx.currentTime;
+      bgmGainNode.gain.cancelScheduledValues(endTime);
+      bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + 0.5); // Fade back up to 100% over 500ms
+    };
+  }
+
   source.start(0);
 }
 
