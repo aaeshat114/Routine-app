@@ -124,7 +124,6 @@ function stopBGM() {
 }
 
 function playSFX(type, panValue = 0) {
-function playSFX(type, panValue = 0) {
   if (!audioBuffers[type]) return;
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffers[type];
@@ -473,7 +472,6 @@ class RoutineInstance {
   }
 
   tick() {
-    tick() {
     if (this.isPaused) return;
     this.elapsed++;
     this.updateUI();
