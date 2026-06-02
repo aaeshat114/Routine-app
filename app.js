@@ -599,6 +599,16 @@ function startRoutineExecution() {
 
 function evaluateGlobalAudio() {
   if (activeInstances.length === 0) { stopBGM(); return; }
+  
+  const allPaused = activeInstances.every(i => i.isPaused);
+  
+  if (allPaused) {
+    if (audioCtx.state === 'running') audioCtx.suspend();
+    return;
+  } else {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
   const anyOvertime = activeInstances.some(i => i.isOvertime);
   playBGM(anyOvertime ? 'urgent' : 'standard');
 }
