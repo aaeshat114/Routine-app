@@ -26,8 +26,6 @@ const PRELOADED_IMAGES = [
   './assets/images/task20.png',
 ];
 let currentTaskImageIndex = null;
-
-
 let db;
 
 function initDB() {
@@ -73,7 +71,7 @@ function dbDelete(storeName, id) {
 // ==========================================
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let globalBGM = null;
-let bgmType = 'standard'; // 'standard' or 'urgent'
+let bgmType = 'standard'; 
 let activeSfxCount = 0;
 
 const bgmGainNode = audioCtx.createGain();
@@ -86,7 +84,6 @@ const AUDIO_PATHS = {
   warning: 'assets/audio/sfx-warning.mp3',
   victory: 'assets/audio/sfx-victory.mp3'
 };
-
 const audioBuffers = {};
 
 async function loadAudio() {
@@ -105,7 +102,6 @@ function playBGM(type) {
   if (bgmType === type && globalBGM) return;
   if (globalBGM) globalBGM.stop();
   if (!audioBuffers[type]) return;
-  
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffers[type];
   source.loop = true;
@@ -114,7 +110,6 @@ function playBGM(type) {
   globalBGM = source;
   bgmType = type;
   
-  // Ensure volume is reset to full when a new BGM track starts
   bgmGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
   bgmGainNode.gain.setValueAtTime(1.0, audioCtx.currentTime);
 }
@@ -137,28 +132,23 @@ function playSFX(type, panValue = 0) {
     source.connect(audioCtx.destination);
   }
 
-  // Audio Ducking: Track active SFX to handle overlapping sounds smoothly
   if (globalBGM) {
     activeSfxCount++;
     const t = audioCtx.currentTime;
     bgmGainNode.gain.cancelScheduledValues(t);
-    bgmGainNode.gain.linearRampToValueAtTime(0.2, t + 0.1); // Drop to 20% volume
+    bgmGainNode.gain.linearRampToValueAtTime(0.2, t + 0.1); 
 
     source.onended = () => {
       activeSfxCount--;
-      // Only ramp the volume back up if no other sound effects are currently playing
       if (activeSfxCount <= 0) {
-        activeSfxCount = 0; // Failsafe
+        activeSfxCount = 0; 
         const endTime = audioCtx.currentTime;
         bgmGainNode.gain.cancelScheduledValues(endTime);
         
-        // ADJUST THESE VALUES TO CUSTOMIZE THE TIMING:
-        const holdDuration = 1.0; // Stay quiet for 1.0 second after SFX ends
-        const fadeDuration = 0.5; // Take 0.5 seconds to fade back to full volume
+        const holdDuration = 1.0; 
+        const fadeDuration = 0.5; 
 
-        // Keep volume at 20% until the hold duration passes
         bgmGainNode.gain.setValueAtTime(0.2, endTime + holdDuration); 
-        // Smoothly ramp back up to 100% after the hold duration
         bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + holdDuration + fadeDuration); 
       }
     };
@@ -167,12 +157,11 @@ function playSFX(type, panValue = 0) {
   source.start(0);
 }
 
-
 // ==========================================
 // 3. Application State & Navigation
 // ==========================================
-let currentMode = 'kids'; // 'kids' or 'parent'
-let activeInstances = []; // Holds RoutineInstances for split screen
+let currentMode = 'kids'; 
+let activeInstances = []; 
 let profiles = [];
 let routines = [];
 let selectedKidsForRoutine = [];
@@ -191,7 +180,6 @@ async function initApp() {
   await loadAudio();
   profiles = await dbGetAll('profiles');
   routines = await dbGetAll('routines');
-  
   const session = await dbGetAll('state');
   if (session.length > 0 && session[0].instances.length > 0) {
     document.getElementById('modal-recovery').classList.remove('hidden');
@@ -205,34 +193,32 @@ async function initApp() {
 }
 
 function switchView(viewName) {
-  // Hide all main views, but skip the navToggle element during the loop
   Object.keys(UI).forEach(key => {
     if (key !== 'navToggle' && UI[key]) {
       UI[key].classList.add('hidden');
     }
   });
 
-  if (viewName === 'kidsHub') {
-    UI.kidsHub.classList.remove('hidden');
-    currentMode = 'kids';
-    UI.navToggle.classList.remove('hidden'); // Use class list instead of style.display
+  if (viewName === 'kidsHub') { 
+    UI.kidsHub.classList.remove('hidden'); 
+    currentMode = 'kids'; 
+    UI.navToggle.classList.remove('hidden'); 
   }
-  if (viewName === 'parentDash') {
+  if (viewName === 'parentDash') { 
     UI.parentDash.classList.remove('hidden');
-    currentMode = 'parent';
-    renderParentDash();
-    UI.navToggle.classList.remove('hidden');
+    currentMode = 'parent'; 
+    renderParentDash(); 
+    UI.navToggle.classList.remove('hidden'); 
   }
-  if (viewName === 'activeRoutine') {
-    UI.activeRoutine.classList.remove('hidden');
+  if (viewName === 'activeRoutine') { 
+    UI.activeRoutine.classList.remove('hidden'); 
     UI.navToggle.classList.add('hidden');
   }
-  if (viewName === 'routineBuilder') {
-    UI.routineBuilder.classList.remove('hidden');
+  if (viewName === 'routineBuilder') { 
+    UI.routineBuilder.classList.remove('hidden'); 
     UI.navToggle.classList.add('hidden');
   }
 }
-
 
 UI.navToggle.addEventListener('click', () => {
   if (currentMode === 'kids') {
@@ -256,10 +242,8 @@ function generateGate() {
   grid.innerHTML = '';
   const primes = [11, 13, 17, 19, 23, 29, 31, 37, 41, 43];
   const nonPrimes = [9, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28];
-  
   const targetPrime = primes[Math.floor(Math.random() * primes.length)];
   let options = [targetPrime];
-  
   while(options.length < 9) {
     const np = nonPrimes[Math.floor(Math.random() * nonPrimes.length)];
     if (!options.includes(np)) options.push(np);
@@ -274,7 +258,7 @@ function generateGate() {
         document.getElementById('modal-gate').classList.add('hidden');
         switchView('parentDash');
       } else {
-        generateGate(); // Reshuffle
+        generateGate(); 
       }
     };
     grid.appendChild(btn);
@@ -292,7 +276,6 @@ async function renderParentDash() {
     div.innerHTML = `${p.name} <button onclick="deleteProfile('${p.id}')">Del</button>`;
     pList.appendChild(div);
   });
-
   const rList = document.getElementById('parent-routine-list');
   rList.innerHTML = '';
   routines.forEach(r => {
@@ -381,7 +364,6 @@ window.openImagePicker = (index) => {
   document.getElementById('modal-image-picker').classList.remove('hidden');
 };
 
-
 document.getElementById('btn-add-task').onclick = () => {
   currentEditingRoutine.tasks.push({ name: 'New Task', minTime: 0, maxTime: 0, skipBehavior: 'none', img: '' });
   renderBuilder();
@@ -401,7 +383,8 @@ document.getElementById('btn-save-routine').onclick = async () => {
   currentEditingRoutine.name = document.getElementById('builder-routine-name').value || 'Unnamed Routine';
   await dbPut('routines', currentEditingRoutine);
   const existingIdx = routines.findIndex(r => r.id === currentEditingRoutine.id);
-  if (existingIdx >= 0) routines[existingIdx] = currentEditingRoutine; else routines.push(currentEditingRoutine);
+  if (existingIdx >= 0) routines[existingIdx] = currentEditingRoutine;
+  else routines.push(currentEditingRoutine);
   switchView('parentDash');
 };
 
@@ -460,7 +443,6 @@ document.querySelectorAll('.close-modal').forEach(btn => {
   btn.onclick = (e) => e.target.closest('.modal').classList.add('hidden');
 });
 
-// Custom Confirm Modal
 window.customConfirm = (msg, onYes) => {
   const modal = document.getElementById('modal-confirm');
   document.getElementById('confirm-title').textContent = msg;
@@ -469,6 +451,9 @@ window.customConfirm = (msg, onYes) => {
   document.getElementById('btn-confirm-no').onclick = () => { modal.classList.add('hidden'); };
 };
 
+// Failsafe empty setup if your project structure references this function externally
+function setupEventListeners() {}
+
 // ==========================================
 // 7. Routine Execution (The Core Engine)
 // ==========================================
@@ -476,7 +461,7 @@ class RoutineInstance {
   constructor(profile, routineData, panSide) {
     this.profile = profile;
     this.routine = JSON.parse(JSON.stringify(routineData));
-    this.panSide = panSide; // -0.4 for Left/Top, +0.4 for Right/Bottom
+    this.panSide = panSide; 
     this.queue = [...this.routine.tasks];
     this.currentTask = null;
     this.elapsed = 0;
@@ -505,22 +490,19 @@ class RoutineInstance {
     if (this.isPaused) return;
     this.elapsed++;
     this.updateUI();
-    
     if (this.currentTask.maxTime > 0 && this.elapsed >= this.currentTask.maxTime && !this.isOvertime) {
       this.isOvertime = true;
       const btnFinish = this.container.querySelector('.btn-finish');
       if (btnFinish) btnFinish.classList.add('overtime');
       
-      // Ensure we don't play chimes if paused
       this.chimeIntervalId = setInterval(() => {
         if (!this.isPaused) playSFX('warning', this.panSide);
       }, 30000);
-      
       if (!this.isPaused) playSFX('warning', this.panSide);
       evaluateGlobalAudio();
     }
     saveSessionState();
-    }
+  }
 
   updateUI() {
     const btnFinish = this.container.querySelector('.btn-finish');
@@ -561,13 +543,12 @@ class RoutineInstance {
       </div>
     `;
 
-        this.container.querySelector('.btn-finish').onclick = () => {
+    this.container.querySelector('.btn-finish').onclick = () => {
       if (this.queue.length > 0) {
         playSFX('complete', this.panSide);
       }
       this.advanceTask();
     };
-
 
     const skipBtn = this.container.querySelector('.btn-skip');
     if(skipBtn) {
@@ -582,7 +563,7 @@ class RoutineInstance {
     this.container.querySelector('.btn-pause').onclick = (e) => {
       this.isPaused = !this.isPaused;
       e.target.textContent = this.isPaused ? 'Resume' : 'Pause';
-      evaluateGlobalAudio(); // Re-evaluate audio state to handle pausing
+      evaluateGlobalAudio(); 
     };
 
     this.container.querySelector('.btn-exit').onclick = () => {
@@ -590,17 +571,12 @@ class RoutineInstance {
     };
   }
 
-    completeRoutine() {
-    if (this.panSide === 0) {
-      stopBGM();
-    }
-
+  completeRoutine() {
     playSFX('victory', this.panSide);
     this.container.innerHTML = `<div class="header-bar">Great Job ${this.profile.name}!</div>`;
     setTimeout(() => this.destroy(), 3000);
-    }
-  
-    
+  }
+
   cleanup() {
     clearInterval(this.intervalId);
     clearInterval(this.chimeIntervalId);
@@ -628,7 +604,6 @@ function startRoutineExecution() {
     activeInstances.push(instance);
     container.appendChild(instance.container);
   });
-
   switchView('activeRoutine');
   if (audioCtx.state === 'suspended') audioCtx.resume();
   playBGM('standard');
@@ -691,7 +666,6 @@ document.getElementById('btn-resume-session').onclick = () => {
     activeInstances.push(instance);
     container.appendChild(instance.container);
   });
-  
   switchView('activeRoutine');
   if (audioCtx.state === 'suspended') audioCtx.resume();
   evaluateGlobalAudio();
@@ -699,4 +673,3 @@ document.getElementById('btn-resume-session').onclick = () => {
 
 // Start
 document.addEventListener('DOMContentLoaded', initApp);
-              
