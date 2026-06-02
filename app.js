@@ -151,7 +151,15 @@ function playSFX(type, panValue = 0) {
         activeSfxCount = 0; // Failsafe
         const endTime = audioCtx.currentTime;
         bgmGainNode.gain.cancelScheduledValues(endTime);
-        bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + 0.5); // Back to 100%
+        
+        // ADJUST THESE VALUES TO CUSTOMIZE THE TIMING:
+        const holdDuration = 1.0; // Stay quiet for 1.0 second after SFX ends
+        const fadeDuration = 0.5; // Take 0.5 seconds to fade back to full volume
+
+        // Keep volume at 20% until the hold duration passes
+        bgmGainNode.gain.setValueAtTime(0.2, endTime + holdDuration); 
+        // Smoothly ramp back up to 100% after the hold duration
+        bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + holdDuration + fadeDuration); 
       }
     };
   }
