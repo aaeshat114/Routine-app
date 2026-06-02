@@ -539,10 +539,13 @@ class RoutineInstance {
       </div>
     `;
 
-    this.container.querySelector('.btn-finish').onclick = () => {
-      playSFX('complete', this.panSide);
+        this.container.querySelector('.btn-finish').onclick = () => {
+      if (this.queue.length > 0) {
+        playSFX('complete', this.panSide);
+      }
       this.advanceTask();
     };
+
 
     const skipBtn = this.container.querySelector('.btn-skip');
     if(skipBtn) {
