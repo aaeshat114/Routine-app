@@ -9,7 +9,7 @@ const ASSETS = [
   './assets/audio/bgm-urgent.mp3',
   './assets/audio/sfx-complete.mp3',
   './assets/audio/sfx-warning.mp3',
-  './assets/audio/sfx-victory.mp3'
+  './assets/audio/sfx-victory.mp3',
   './assets/images/task1.png',
   './assets/images/task2.png',
   './assets/images/task3.png',
