@@ -477,7 +477,6 @@ class RoutineInstance {
   }
 
   renderTask() {
-    renderTask() {
     if (this.currentTask.img) {
       this.container.style.backgroundImage = `url('${this.currentTask.img}')`;
       this.container.style.backgroundColor = 'rgba(255,255,255,0.4)';
