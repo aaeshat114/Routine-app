@@ -205,12 +205,34 @@ async function initApp() {
 }
 
 function switchView(viewName) {
-  Object.values(UI).forEach(el => { if (el) el.classList.add('hidden'); });
-  if (viewName === 'kidsHub') { UI.kidsHub.classList.remove('hidden'); currentMode = 'kids'; UI.navToggle.style.display = 'block'; }
-  if (viewName === 'parentDash') { UI.parentDash.classList.remove('hidden'); currentMode = 'parent'; renderParentDash(); UI.navToggle.style.display = 'block'; }
-  if (viewName === 'activeRoutine') { UI.activeRoutine.classList.remove('hidden'); UI.navToggle.style.display = 'none'; }
-  if (viewName === 'routineBuilder') { UI.routineBuilder.classList.remove('hidden'); UI.navToggle.style.display = 'none'; }
+  // Hide all main views, but skip the navToggle element during the loop
+  Object.keys(UI).forEach(key => {
+    if (key !== 'navToggle' && UI[key]) {
+      UI[key].classList.add('hidden');
+    }
+  });
+
+  if (viewName === 'kidsHub') {
+    UI.kidsHub.classList.remove('hidden');
+    currentMode = 'kids';
+    UI.navToggle.classList.remove('hidden'); // Use class list instead of style.display
+  }
+  if (viewName === 'parentDash') {
+    UI.parentDash.classList.remove('hidden');
+    currentMode = 'parent';
+    renderParentDash();
+    UI.navToggle.classList.remove('hidden');
+  }
+  if (viewName === 'activeRoutine') {
+    UI.activeRoutine.classList.remove('hidden');
+    UI.navToggle.classList.add('hidden');
+  }
+  if (viewName === 'routineBuilder') {
+    UI.routineBuilder.classList.remove('hidden');
+    UI.navToggle.classList.add('hidden');
+  }
 }
+
 
 UI.navToggle.addEventListener('click', () => {
   if (currentMode === 'kids') {
