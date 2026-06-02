@@ -557,12 +557,17 @@ class RoutineInstance {
     };
   }
 
-  completeRoutine() {
+    completeRoutine() {
+    if (this.panSide === 0) {
+      stopBGM();
+    }
+
     playSFX('victory', this.panSide);
     this.container.innerHTML = `<div class="header-bar">Great Job ${this.profile.name}!</div>`;
     setTimeout(() => this.destroy(), 3000);
-  }
-
+    }
+  
+    
   cleanup() {
     clearInterval(this.intervalId);
     clearInterval(this.chimeIntervalId);
