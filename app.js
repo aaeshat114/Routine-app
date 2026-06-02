@@ -464,6 +464,7 @@ class RoutineInstance {
   }
 
   tick() {
+    tick() {
     if (this.isPaused) return;
     this.elapsed++;
     this.updateUI();
@@ -472,12 +473,17 @@ class RoutineInstance {
       this.isOvertime = true;
       const btnFinish = this.container.querySelector('.btn-finish');
       if (btnFinish) btnFinish.classList.add('overtime');
-      this.chimeIntervalId = setInterval(() => playSFX('warning', this.panSide), 30000);
-      playSFX('warning', this.panSide);
+      
+      // Ensure we don't play chimes if paused
+      this.chimeIntervalId = setInterval(() => {
+        if (!this.isPaused) playSFX('warning', this.panSide);
+      }, 30000);
+      
+      if (!this.isPaused) playSFX('warning', this.panSide);
       evaluateGlobalAudio();
     }
     saveSessionState();
-  }
+    }
 
   updateUI() {
     const btnFinish = this.container.querySelector('.btn-finish');
@@ -536,6 +542,7 @@ class RoutineInstance {
     this.container.querySelector('.btn-pause').onclick = (e) => {
       this.isPaused = !this.isPaused;
       e.target.textContent = this.isPaused ? 'Resume' : 'Pause';
+      evaluateGlobalAudio(); // Re-evaluate audio state to handle pausing
     };
 
     this.container.querySelector('.btn-exit').onclick = () => {
