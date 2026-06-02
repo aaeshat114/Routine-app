@@ -394,10 +394,41 @@ document.getElementById('btn-save-routine').onclick = async () => {
 function renderKidsHub() {
   const grid = document.getElementById('kids-routine-grid');
   grid.innerHTML = '';
-  routines.forEach(r => {
+  
+  // High-contrast, friendly gradients matching modern kids dashboards
+  const cardStyles = [
+    { bg: 'linear-gradient(135deg, #ff7b00, #ffae00)', icon: '☀️' }, // Morning / Orange
+    { bg: 'linear-gradient(135deg, #6b21a8, #a855f7)', icon: '🌙' }, // Night / Purple
+    { bg: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', icon: '🚀' }, // Sky / Blue
+    { bg: 'linear-gradient(135deg, #10b981, #34d399)', icon: '🌱' }  // Activity / Green
+  ];
+
+  routines.forEach((r, idx) => {
     const card = document.createElement('div');
     card.className = 'routine-card';
-    card.textContent = r.name;
+    
+    // Cycle through visual themes safely
+    const style = cardStyles[idx % cardStyles.length];
+    card.style.background = style.bg;
+    
+    // Pair semantic icons based on key phrases in your routine name
+    let icon = style.icon;
+    const lowerName = r.name.toLowerCase();
+    if (lowerName.includes('morn')) icon = '☀️';
+    else if (lowerName.includes('bed') || lowerName.includes('night')) icon = '🌙';
+    else if (lowerName.includes('school') || lowerName.includes('stud')) icon = '📚';
+    else if (lowerName.includes('play') || lowerName.includes('game')) icon = '🧩';
+
+    const taskCount = r.tasks ? r.tasks.length : 0;
+
+    card.innerHTML = `
+      <div class="card-icon">${icon}</div>
+      <div class="card-content">
+        <h2 class="card-title">${r.name}</h2>
+        <p class="card-subtitle">${taskCount} ${taskCount === 1 ? 'Task' : 'Tasks'}</p>
+      </div>
+    `;
+    
     card.onclick = () => handleRoutineClick(r.id);
     grid.appendChild(card);
   });
