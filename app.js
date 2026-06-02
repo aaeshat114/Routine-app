@@ -74,6 +74,7 @@ function dbDelete(storeName, id) {
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let globalBGM = null;
 let bgmType = 'standard'; // 'standard' or 'urgent'
+let activeSfxCount = 0;
 
 const bgmGainNode = audioCtx.createGain();
 bgmGainNode.connect(audioCtx.destination);
@@ -123,6 +124,7 @@ function stopBGM() {
 }
 
 function playSFX(type, panValue = 0) {
+function playSFX(type, panValue = 0) {
   if (!audioBuffers[type]) return;
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffers[type];
@@ -136,21 +138,28 @@ function playSFX(type, panValue = 0) {
     source.connect(audioCtx.destination);
   }
 
-  // Audio Ducking: Lower BGM volume when SFX plays, then fade back in
+  // Audio Ducking: Track active SFX to handle overlapping sounds smoothly
   if (globalBGM) {
+    activeSfxCount++;
     const t = audioCtx.currentTime;
     bgmGainNode.gain.cancelScheduledValues(t);
-    bgmGainNode.gain.linearRampToValueAtTime(0.2, t + 0.1); // Fade down to 20% over 100ms
+    bgmGainNode.gain.linearRampToValueAtTime(0.2, t + 0.1); // Drop to 20% volume
 
     source.onended = () => {
-      const endTime = audioCtx.currentTime;
-      bgmGainNode.gain.cancelScheduledValues(endTime);
-      bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + 0.5); // Fade back up to 100% over 500ms
+      activeSfxCount--;
+      // Only ramp the volume back up if no other sound effects are currently playing
+      if (activeSfxCount <= 0) {
+        activeSfxCount = 0; // Failsafe
+        const endTime = audioCtx.currentTime;
+        bgmGainNode.gain.cancelScheduledValues(endTime);
+        bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + 0.5); // Back to 100%
+      }
     };
   }
 
   source.start(0);
 }
+
 
 // ==========================================
 // 3. Application State & Navigation
