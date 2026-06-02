@@ -392,40 +392,25 @@ document.getElementById('btn-save-routine').onclick = async () => {
 // 6. Kids Hub & Modal Management
 // ==========================================
 function renderKidsHub() {
+function renderKidsHub() {
   const grid = document.getElementById('kids-routine-grid');
   grid.innerHTML = '';
-  
-  // High-contrast, friendly gradients matching modern kids dashboards
-  const cardStyles = [
-    { bg: 'linear-gradient(135deg, #ff7b00, #ffae00)', icon: '☀️' }, // Morning / Orange
-    { bg: 'linear-gradient(135deg, #6b21a8, #a855f7)', icon: '🌙' }, // Night / Purple
-    { bg: 'linear-gradient(135deg, #0ea5e9, #38bdf8)', icon: '🚀' }, // Sky / Blue
-    { bg: 'linear-gradient(135deg, #10b981, #34d399)', icon: '🌱' }  // Activity / Green
-  ];
-
-  routines.forEach((r, idx) => {
+  routines.forEach(r => {
     const card = document.createElement('div');
     card.className = 'routine-card';
     
-    // Cycle through visual themes safely
-    const style = cardStyles[idx % cardStyles.length];
-    card.style.background = style.bg;
-    
-    // Pair semantic icons based on key phrases in your routine name
-    let icon = style.icon;
-    const lowerName = r.name.toLowerCase();
-    if (lowerName.includes('morn')) icon = '☀️';
-    else if (lowerName.includes('bed') || lowerName.includes('night')) icon = '🌙';
-    else if (lowerName.includes('school') || lowerName.includes('stud')) icon = '📚';
-    else if (lowerName.includes('play') || lowerName.includes('game')) icon = '🧩';
-
-    const taskCount = r.tasks ? r.tasks.length : 0;
+    // Automatically pair a fun emoji icon based on common routine keywords
+    let icon = '✨';
+    const nameLower = r.name.toLowerCase();
+    if (nameLower.includes('morning')) icon = '☀️';
+    else if (nameLower.includes('bed') || nameLower.includes('night')) icon = '🌙';
+    else if (nameLower.includes('school')) icon = '🎒';
+    else if (nameLower.includes('chore') || nameLower.includes('clean')) icon = '🧹';
 
     card.innerHTML = `
       <div class="card-icon">${icon}</div>
-      <div class="card-content">
-        <h2 class="card-title">${r.name}</h2>
-        <p class="card-subtitle">${taskCount} ${taskCount === 1 ? 'Task' : 'Tasks'}</p>
+      <div class="card-info">
+        <div class="card-title">${r.name}</div>
       </div>
     `;
     
