@@ -166,5 +166,5 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-finish.overtime { animation: overtime-loop 10s infinite linear; }
 
 /* Responsive Orientations */
-@media (orientation: landscape) { .split-screen-container { flex-direction: row; } }
-@media (orientation: portrait) { .split-screen-container { flex-direction: column; } }
+@media (orientation: landscape) { .split-screen-container { flex-direction: row; } .nav-toggle.kids-mode { top: 25px;a bottom: auto; }}
+@media (orientation: portrait) { .split-screen-container { flex-direction: column; } .nav-toggle.kids-mode { top: auto; bottom: 25px; }}
