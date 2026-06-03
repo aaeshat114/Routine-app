@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;700&display=swap');
 
 :root {
   --bg-parent: #f4f5f7;
@@ -9,8 +9,8 @@
   --kid-btn: #2196f3;
   --kid-btn-hover: #126db8;
   --kid-btn-radius: 35px;
-  --font-kids: 'Cherry Bomb One', sans-serif;
-  --font-parent: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-kids: 'Cherry Bomb One';
+  --font-parent: 'Fredoka';
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
