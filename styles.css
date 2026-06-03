@@ -137,11 +137,9 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-choose-img { background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
 /* Split Screen Execution */
-.split-screen-container { display: flex; width: 100%; height: 100vh; }
+.view:has(.split-screen-container) { padding: 0; } .split-screen-container { display: flex; width: 100%; height: 100vh; }
 .partition { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 30px; border: none; border-radius: 0; margin: 0; background-size: cover; background-position: center; background-repeat: no-repeat; position: relative; overflow: hidden; }
-
 .partition .header-bar { font-size: 32px; font-family: var(--font-kids); background: rgba(255,255,255,0.9); padding: 15px 20px; border-radius: 20px; width: 100%; max-width: 600px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.1); z-index: 2; }
-
 .timer-bar { height: 20px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; width: 100%; max-width: 600px; margin-top: 20px; margin-bottom: auto; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); z-index: 2; }
 .timer-fill { height: 100%; background: #4caf50; width: 100%; transition: width 1s linear; }
 .partition-controls { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; width: 100%; padding-bottom: 20px; z-index: 2; }
