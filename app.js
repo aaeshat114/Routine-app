@@ -560,11 +560,11 @@ class RoutineInstance {
           ${this.currentTask.img ?
 `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
         </div>
-        <div class="kid-name-display">${this.profile.name}</div>
         <div class="partition-controls">
           <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ?
 'style="visibility: hidden;"' : ''}>Finish</button>
           <button class="kid-btn btn-pause">Pause</button>
+          <div class="kid-name-display">${this.profile.name}</div>
           <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ?
 'disabled' : ''}>Skip</button>
           <button class="kid-btn btn-exit">Exit</button>
