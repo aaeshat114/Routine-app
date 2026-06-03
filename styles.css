@@ -288,11 +288,16 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .split-screen-container { 
     flex-direction: row;
   } 
-  
   .nav-toggle.kids-mode { 
     top: 25px; 
     bottom: auto;
   } 
+
+  .kid-name-display {
+    width: auto;
+    padding-bottom: 0;
+    align-self: center;
+  }
 
   /* Fallback centering alignment structure for multiplayer splits */
   .partition-controls {
@@ -305,25 +310,29 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
-    padding-left: 2vw;  /* Brings left-side group closer to the edge */
-    padding-right: 2vw; /* Brings right-side group closer to the edge */
+    padding-left: 2vw;  
+    padding-right: 2vw;
     padding-bottom: 2vh; 
-    gap: 0 1.5vw;       /* Decreased spacing between immediate pairs */
+    gap: 0 1.5vw;
   }
   
-  /* Layout Ordering and Separation */
+  /* Layout Ordering and Separation for Single Player Landscape */
   .partition:only-child .btn-finish { 
     order: 1;
   }
   .partition:only-child .btn-pause { 
     order: 2; 
-    margin-right: auto; /* Pushes skip and exit entirely to the right margin */
+    margin-right: auto; /* Pushes center name away from left pair */
+  }
+  .partition:only-child .kid-name-display {
+    order: 3;
+    margin-right: auto; /* Pushes right pair away from center name */
   }
   .partition:only-child .btn-skip { 
-    order: 3;
+    order: 4;
   }
   .partition:only-child .btn-exit { 
-    order: 4;
+    order: 5;
   }
 
   /* Responsive, scaled-down button sizing specifically for single-player landscape */
@@ -338,22 +347,18 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .split-screen-container { 
     flex-direction: column;
   } 
-  
   .nav-toggle.kids-mode { 
     top: auto; 
     bottom: 25px;
   } 
-  
   .partition { 
     padding: 1.5vh 4vw;
   } 
-  
   .partition .header-bar { 
     font-size: 3vh; 
     padding: 0.8vh 20px; 
     max-width: 85%;
   } 
-  
   .timer-bar { 
     height: 1.2vh; 
     margin-top: 1vh; 
@@ -370,9 +375,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     max-width: 90%;
     margin: auto auto 1vh auto;
     padding-bottom: 0.5vh;
-    pointer-events: auto; /* Restores normal layout mapping for grid clicks */
+    pointer-events: auto; 
   } 
-  
   .partition-controls .kid-btn { 
     padding: 1.2vh 2vw;
     font-size: 1.8vh; 
@@ -380,9 +384,20 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     width: 100%;
     text-align: center;
   } 
-  
-  .kid-name-display { 
+
+  /* Layout Ordering for Portrait Grid */
+  .partition-controls .btn-finish { order: 1; }
+  .partition-controls .btn-pause { order: 2; }
+  .partition-controls .btn-skip { order: 3; }
+  .partition-controls .btn-exit { order: 4; }
+
+  .partition-controls .kid-name-display { 
+    order: 5;
+    grid-column: span 2; /* Forces name to sit below the 2x2 grid rows */
+    text-align: center;
     font-size: 2vh;
+    padding-top: 1vh;
     padding-bottom: 0.5vh; 
+    width: 100%;
   } 
 }
