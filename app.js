@@ -521,10 +521,9 @@ class RoutineInstance {
     }
   }
 
-  renderTask() {
-        if (this.currentTask.img) {
-      this.container.style.backgroundImage = `url('${this.currentTask.img}')`;
-      this.container.style.backgroundBlendMode = 'normal';
+    renderTask() {
+    if (this.currentTask.img) {
+      this.container.style.backgroundImage = 'none'; // Clear background style
       
       const palette = ['#9edbf8', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#f78429', '#c3e8b2', '#60bba9'];
       const img = new Image();
@@ -535,10 +534,7 @@ class RoutineInstance {
         cvs.height = img.height;
         const ctx = cvs.getContext('2d');
         ctx.drawImage(img, 0, 0);
-        
-        // Samples a pixel 5 pixels away from the top-right corner to avoid edge artifacts
         const [r, g, b] = ctx.getImageData(img.width - 5, 5, 1, 1).data;
-        
         let closest = palette[0], minD = Infinity;
         palette.forEach(hex => {
           const d = Math.pow(r - parseInt(hex.slice(1,3),16), 2) + 
@@ -553,9 +549,15 @@ class RoutineInstance {
       this.container.style.backgroundColor = 'transparent';
     }
 
+    // New three-block structural layout template
     this.container.innerHTML = `
-      <div class="header-bar">${this.profile.name}: ${this.currentTask.name}</div>
-      ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
+      <div class="partition-top">
+        <div class="header-bar">${this.profile.name}: ${this.currentTask.name}</div>
+        ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
+      </div>
+      <div class="partition-middle">
+        ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
+      </div>
       <div class="partition-controls">
         <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="display:none;"' : ''}>Finish</button>
         ${this.currentTask.skipBehavior !== 'none' ? `<button class="kid-btn tilted btn-skip">Skip</button>` : ''}
@@ -590,7 +592,7 @@ class RoutineInstance {
     this.container.querySelector('.btn-exit').onclick = () => {
       window.customConfirm("Exit Routine?", () => this.destroy());
     };
-  }
+    }
 
   completeRoutine() {
     playSFX('victory', this.panSide);
