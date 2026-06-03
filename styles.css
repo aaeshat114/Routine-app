@@ -282,6 +282,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 
 /* Responsive Orientations */
 @media (orientation: landscape) { 
+@media (orientation: landscape) { 
   .split-screen-container { 
     flex-direction: row; 
   } 
@@ -297,20 +298,37 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding-bottom: 2vh;
   }
 
-  /* Single-player execution variant: corners split, background graphic expands */
+  /* Single-player variant: optimized for maximum image real-estate and tight edge groupings */
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
-    padding-left: 4vw;
-    padding-right: 4vw;
-    padding-bottom: 4vh; 
-    gap: 0 3vw;
+    padding-left: 2vw;  /* Brings left-side group closer to the edge */
+    padding-right: 2vw; /* Brings right-side group closer to the edge */
+    padding-bottom: 2vh; 
+    gap: 0 1.5vw;       /* Decreased spacing between immediate pairs */
   }
   
-  .partition:only-child .btn-finish { order: 1; }
-  .partition:only-child .btn-pause { order: 2; margin-right: auto; }
-  .partition:only-child .btn-skip { order: 3; }
-  .partition:only-child .btn-exit { order: 4; }
+  /* Layout Ordering and Separation */
+  .partition:only-child .btn-finish { 
+    order: 1; 
+  }
+  .partition:only-child .btn-pause { 
+    order: 2; 
+    margin-right: auto; /* Pushes skip and exit entirely to the right margin */
+  }
+  .partition:only-child .btn-skip { 
+    order: 3; 
+  }
+  .partition:only-child .btn-exit { 
+    order: 4; 
+  }
+
+  /* Responsive, scaled down button sizing specifically for single child landscape layout */
+  .partition:only-child .partition-controls .kid-btn {
+    padding: 1vh 2.5vw;
+    font-size: 1.8vh;
+    min-width: 11vw;
+  }
 }
 
 @media (orientation: portrait) { 
