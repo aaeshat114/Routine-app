@@ -272,9 +272,25 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .partition-controls { 
     justify-content: center; 
   } 
+  
+  /* Single Player Split Button Layout */
+  .partition:only-child .partition-controls {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    gap: 0 3vw;
+  }
+  
+  /* Reorder and isolate groups */
+  .partition:only-child .btn-finish { order: 1; }
+  .partition:only-child .btn-pause { order: 2; margin-right: auto; }
+  .partition:only-child .btn-skip { order: 3; }
+  .partition:only-child .btn-exit { order: 4; }
 }
 
-@media (orientation: portrait) { 
 @media (orientation: portrait) { 
   .split-screen-container { 
     flex-direction: column; 
