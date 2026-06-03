@@ -137,8 +137,25 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .partition-controls { display: flex; justify-content: center; flex-wrap: wrap; margin-top: auto; }
 
 /* Overtime Animation */
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); }}
-.btn-finish.overtime { animation: pulse 1s infinite; }
+@keyframes overtime-loop {
+  /* Growing and shrinking pulses every 1 second from 0s to 9s */
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { 
+    transform: scale(1) translateY(0) rotate(0deg); 
+  }
+  5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85% { 
+    transform: scale(1.1) translateY(0) rotate(0deg); 
+  }
+  
+  /* The Jump and Somersault trick from 9s to 10s */
+  95% { 
+    transform: scale(1.2) translateY(-60px) rotate(180deg); 
+  }
+  100% { 
+    transform: scale(1) translateY(0) rotate(360deg); 
+  }
+}
+
+.btn-finish.overtime { animation: overtime-loop 10s infinite linear; }
 
 /* Responsive Orientations */
 @media (orientation: landscape) { .split-screen-container { flex-direction: row; } }
