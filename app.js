@@ -549,7 +549,7 @@ class RoutineInstance {
       this.container.style.backgroundColor = 'transparent';
     }
 
-        this.container.innerHTML = `
+            this.container.innerHTML = `
       <div class="partition-top">
         <div class="header-bar">${this.currentTask.name}</div>
         ${this.currentTask.maxTime > 0 ?
