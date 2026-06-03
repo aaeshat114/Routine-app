@@ -392,7 +392,6 @@ document.getElementById('btn-save-routine').onclick = async () => {
 // 6. Kids Hub & Modal Management
 // ==========================================
 function renderKidsHub() {
-function renderKidsHub() {
   const grid = document.getElementById('kids-routine-grid');
   grid.innerHTML = '';
   routines.forEach(r => {
