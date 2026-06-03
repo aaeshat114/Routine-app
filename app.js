@@ -402,21 +402,6 @@ function renderKidsHub() {
     const card = document.createElement('div');
     card.className = 'routine-card';
     
-    // Automatically pair a fun emoji icon based on common routine keywords
-    let icon = '✨';
-    const nameLower = r.name.toLowerCase();
-    if (nameLower.includes('morning')) icon = '☀️';
-    else if (nameLower.includes('bed') || nameLower.includes('night')) icon = '🌙';
-    else if (nameLower.includes('school')) icon = '🎒';
-    else if (nameLower.includes('chore') || nameLower.includes('clean')) icon = '🧹';
-
-    card.innerHTML = `
-      <div class="card-icon">${icon}</div>
-      <div class="card-info">
-        <div class="card-title">${r.name}</div>
-      </div>
-    `;
-    
     card.onclick = () => handleRoutineClick(r.id);
     grid.appendChild(card);
   });
