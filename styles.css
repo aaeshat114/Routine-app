@@ -142,6 +142,16 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-choose-img { background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
 /* Split Screen Execution */
+.kid-name-display {
+  font-family: var(--font-kids);
+  font-size: 2.6vh;
+  color: var(--text-kids);
+  text-align: center;
+  margin-top: auto;      /* Flexbox magic: pushes name & buttons perfectly to the bottom */
+  margin-bottom: 0.8vh;  /* Gives a soft, deliberate gap right above the buttons */
+  width: 100%;
+}
+
 .view:has(.split-screen-container) { padding: 0; overflow: hidden; }
 
 .split-screen-container { 
