@@ -523,8 +523,8 @@ class RoutineInstance {
 
   renderTask() {
     if (this.currentTask.img) {
-      this.container.style.backgroundImage = `url('${this.currentTask.img}')`;
-      this.container.style.backgroundBlendMode = 'normal';
+      this.container.style.backgroundBlendMode = 'normal'; const palette = ['#9edbf8', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#f78429', '#c3e8b2', '#60bba9'], img = new Image(); img.src = this.currentTask.img; img.onload = () => { const cvs = document.createElement('canvas'); cvs.width = 1; cvs.height = 1; const ctx = cvs.getContext('2d'); ctx.drawImage(img, 0, 0, 1, 1); const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data; let closest = palette[0], minD = Infinity; palette.forEach(hex => { const d = Math.pow(r - parseInt(hex.slice(1,3),16), 2) + Math.pow(g - parseInt(hex.slice(3,5),16), 2) + Math.pow(b - parseInt(hex.slice(5,7),16), 2); if (d < minD) { minD = d; closest = hex; } });
+      this.container.style.backgroundColor = closest; };
     } else {
       this.container.style.backgroundImage = 'none';
       this.container.style.backgroundColor = 'transparent';
