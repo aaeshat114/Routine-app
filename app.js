@@ -554,14 +554,16 @@ class RoutineInstance {
         <div class="header-bar">${this.profile.name}: ${this.currentTask.name}</div>
         ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
       </div>
-      <div class="partition-middle">
-        ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
-      </div>
-      <div class="partition-controls">
-        <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="visibility: hidden;"' : ''}>Finish</button>
-        <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ? 'disabled' : ''}>Skip</button>
-        <button class="kid-btn btn-pause">Pause</button>
-        <button class="kid-btn btn-exit">Exit</button>
+      <div class="partition-body-combined">
+        <div class="partition-middle">
+          ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
+        </div>
+        <div class="partition-controls">
+          <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="visibility: hidden;"' : ''}>Finish</button>
+          <button class="kid-btn btn-pause">Pause</button>
+          <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ? 'disabled' : ''}>Skip</button>
+          <button class="kid-btn btn-exit">Exit</button>
+        </div>
       </div>
     `;
 
