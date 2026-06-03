@@ -147,36 +147,25 @@ Original file line number	Diff line number	Diff line change
 .btn-choose-img { background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
 /* Split Screen Execution */
-.view:has(.split-screen-container) { padding: 0; overflow: hidden; } .split-screen-container { display: flex; width: 100%; height: 100vh; overflow: hidden; }
-.partition { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 25px 40px; border: none; border-radius: 0; margin: 0; background-size: contain; background-position: center 45%; background-repeat: no-repeat; position: relative; overflow: hidden; background-color: #0d3b66; }
-.partition .header-bar { font-size: 36px; font-family: var(--font-kids); background: #ffffff; color: #142d58; padding: 12px 30px; border-radius: 50px; width: 100%; max-width: 700px; text-align: center; box-shadow: 0 6px 15px rgba(0,0,0,0.15); z-index: 2; margin-bottom: 0; }
-.timer-bar { height: 16px; background: rgba(255, 255, 255, 0.2); border-radius: 20px; overflow: hidden; width: 100%; max-width: 700px; margin-top: 14px; margin-bottom: auto; z-index: 2; }
+.view:has(.split-screen-container) { padding: 0; overflow: hidden; }
+.split-screen-container { display: flex; width: 100%; height: 100vh; overflow: hidden; }
+.partition { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 2.5vh 4vw; border: none; border-radius: 0; margin: 0; background-size: contain; background-position: center 45%; background-repeat: no-repeat; position: relative; overflow: hidden; background-color: #0d3b66; }
+.partition .header-bar { font-size: 3.8vh; font-family: var(--font-kids); background: #ffffff; color: #142d58; padding: 1.2vh 30px; border-radius: 50px; width: 100%; max-width: 700px; text-align: center; box-shadow: 0 6px 15px rgba(0,0,0,0.15); z-index: 2; margin-bottom: 0; }
+.timer-bar { height: 1.6vh; background: rgba(255, 255, 255, 0.2); border-radius: 20px; overflow: hidden; width: 100%; max-width: 700px; margin-top: 1.5vh; margin-bottom: auto; z-index: 2; }
 .timer-fill { height: 100%; background: #4caf50; width: 100%; transition: width 1s linear; }
-.partition-controls { display: flex; justify-content: center; align-items: center; gap: 12px 24px; flex-wrap: wrap; width: 100%; max-width: 750px; padding-bottom: 5px; z-index: 2; } .partition-controls .kid-btn { margin: 0; padding: 12px 28px; font-size: 18px; }
-
-.kid-name-display { font-family: var(--font-kids); font-size: 22px; color: rgba(255, 255, 255, 0.7); text-align: center; width: 100%; padding-bottom: 10px; z-index: 2; }
+.partition-controls { display: flex; justify-content: center; align-items: center; gap: 1.5vh 4vw; flex-wrap: wrap; width: 100%; max-width: 750px; padding-bottom: 1vh; z-index: 2; }
+.partition-controls .kid-btn { margin: 0; padding: 1.2vh 4vw; font-size: 2vh; }
+.kid-name-display { font-family: var(--font-kids); font-size: 2.4vh; color: rgba(255, 255, 255, 0.7); text-align: center; width: 100%; padding-bottom: 1vh; z-index: 2; }
 
 /* Overtime Animation */
 @keyframes overtime-loop {
-  /* Growing and shrinking pulses every 1 second from 0s to 9s */
-  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { 
-    transform: scale(1) translateY(0) rotate(0deg); 
-  }
-  5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85% { 
-    transform: scale(1.1) translateY(0) rotate(0deg); 
-  }
-  
-  /* The Jump and Somersault trick from 9s to 10s */
-  95% { 
-    transform: scale(1.2) translateY(-60px) rotate(180deg); 
-  }
-  100% { 
-    transform: scale(1) translateY(0) rotate(360deg); 
-  }
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { transform: scale(1) translateY(0) rotate(0deg); }
+  5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85% { transform: scale(1.1) translateY(0) rotate(0deg); }
+  95% { transform: scale(1.2) translateY(-60px) rotate(180deg); }
+  100% { transform: scale(1) translateY(0) rotate(360deg); }
 }
-
 .btn-finish.overtime { animation: overtime-loop 10s infinite linear; }
 
 /* Responsive Orientations */
 @media (orientation: landscape) { .split-screen-container { flex-direction: row; } .nav-toggle.kids-mode { top: 25px; bottom: auto; } .partition-controls { justify-content: space-between; padding: 0 20px 20px 20px; } }
-@media (orientation: portrait) { .split-screen-container { flex-direction: column; } .nav-toggle.kids-mode { top: auto; bottom: 25px; }}
+@media (orientation: portrait) { .split-screen-container { flex-direction: column; } .nav-toggle.kids-mode { top: auto; bottom: 25px; } .partition { padding: 1.5vh 4vw; } .partition .header-bar { font-size: 3vh; padding: 0.8vh 20px; max-width: 85%; } .timer-bar { height: 1.2vh; margin-top: 1vh; max-width: 85%; } .partition-controls { gap: 1vh 3vw; padding-bottom: 0.5vh; max-width: 90%; } .partition-controls .kid-btn { padding: 1vh 3vw; font-size: 1.8vh; } .kid-name-display { font-size: 2vh; padding-bottom: 0.5vh; } }
