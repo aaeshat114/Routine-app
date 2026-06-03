@@ -203,12 +203,16 @@ function switchView(viewName) {
     UI.kidsHub.classList.remove('hidden'); 
     currentMode = 'kids'; 
     UI.navToggle.classList.remove('hidden'); 
+    UI.navToggle.classList.add('kids-mode');
+    UI.navToggle.classList.remove('parent-mode');
   }
   if (viewName === 'parentDash') { 
     UI.parentDash.classList.remove('hidden');
     currentMode = 'parent'; 
     renderParentDash(); 
     UI.navToggle.classList.remove('hidden'); 
+    UI.navToggle.classList.add('parent-mode');
+    UI.navToggle.classList.remove('kids-mode');
   }
   if (viewName === 'activeRoutine') { 
     UI.activeRoutine.classList.remove('hidden'); 
