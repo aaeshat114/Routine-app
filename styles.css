@@ -107,7 +107,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   box-shadow: 0 4px 10px rgba(20, 45, 88, 0.1);
 }
 
-.kid-btn { background: var(--kid-btn); color: white; border: none; padding: 15px 30px; font-size: 20px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 10px; box-shadow: 0 6px 0 #142d58; transition: all 0.1s; }
+.kid-btn { background: var(--kid-btn); color: white; border: none; padding: 15px 30px; font-size: 20px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 10px; box-shadow: 0 6px 0 #e65100; transition: all 0.1s; }
 .kid-btn:active { transform: translateY(6px); box-shadow: none; }
 .kid-btn.tilted { transform: rotate(-3deg); }
 .kid-btn.tilted:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
@@ -118,7 +118,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-finish:active { transform: translateY(6px); box-shadow: none; }
 .btn-pause { background: var(--kid-btn); box-shadow: 0 6px 0 #0a4b80; }
 .btn-pause:active { transform: translateY(6px); box-shadow: none; }
-.btn-skip { background: #ff9800; box-shadow: 0 6px 0 #e65100; }
+.btn-skip { background: #ff9800; box-shadow: 0 6px 0 #142d58; }
 .btn-skip:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
 .btn-exit { background: #ff5722; box-shadow: 0 6px 0 #a32903; }
 .btn-exit:active { transform: translateY(6px); box-shadow: none; }
