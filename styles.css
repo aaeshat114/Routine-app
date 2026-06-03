@@ -124,7 +124,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-exit:active { transform: translateY(6px); box-shadow: none; }
 
 /* Modals */
-.modal { position: fixed; top: 0; left: 0; width: 90%; height: 90%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.modal { position: center; width: 90%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .modal-content { background: #fff; padding: 40px; border-radius: 20px; position: relative; min-width: 300px; text-align: center; }
 .close-modal { position: absolute; top: -20px; right: -20px; background: #ff5722; color: white; border: none; font-family: var(--font-kids); cursor: pointer; border-radius:  30% 42% 58% 70% / 55% 45% 45% 55%; width: 50px; height: 50px; font-size: 22px; display: flex; align-items: center; justify-content: center; }
 .grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
