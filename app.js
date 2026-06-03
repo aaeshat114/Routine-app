@@ -503,13 +503,13 @@ class RoutineInstance {
     saveSessionState();
   }
 
-  updateUI() {
+    updateUI() {
     const btnFinish = this.container.querySelector('.btn-finish');
     if (this.currentTask.minTime > 0) {
       if (this.elapsed >= this.currentTask.minTime) {
-        if(btnFinish) btnFinish.style.display = 'block';
+        if(btnFinish) btnFinish.style.visibility = 'visible';
       } else {
-        if(btnFinish) btnFinish.style.display = 'none';
+        if(btnFinish) btnFinish.style.visibility = 'hidden';
       }
     }
     
@@ -521,9 +521,9 @@ class RoutineInstance {
     }
   }
 
-    renderTask() {
+  renderTask() {
     if (this.currentTask.img) {
-      this.container.style.backgroundImage = 'none'; // Clear background style
+      this.container.style.backgroundImage = 'none'; 
       
       const palette = ['#9edbf8', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#f78429', '#c3e8b2', '#60bba9'];
       const img = new Image();
@@ -549,7 +549,6 @@ class RoutineInstance {
       this.container.style.backgroundColor = 'transparent';
     }
 
-    // New three-block structural layout template
     this.container.innerHTML = `
       <div class="partition-top">
         <div class="header-bar">${this.profile.name}: ${this.currentTask.name}</div>
@@ -559,8 +558,8 @@ class RoutineInstance {
         ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
       </div>
       <div class="partition-controls">
-        <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="display:none;"' : ''}>Finish</button>
-        ${this.currentTask.skipBehavior !== 'none' ? `<button class="kid-btn tilted btn-skip">Skip</button>` : ''}
+        <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="visibility: hidden;"' : ''}>Finish</button>
+        <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ? 'disabled' : ''}>Skip</button>
         <button class="kid-btn btn-pause">Pause</button>
         <button class="kid-btn btn-exit">Exit</button>
       </div>
@@ -574,7 +573,7 @@ class RoutineInstance {
     };
 
     const skipBtn = this.container.querySelector('.btn-skip');
-    if(skipBtn) {
+    if (skipBtn && this.currentTask.skipBehavior !== 'none') {
       skipBtn.onclick = () => {
         window.customConfirm(`Skip ${this.currentTask.name}?`, () => {
           if (this.currentTask.skipBehavior === 'defer') this.queue.push(this.currentTask);
@@ -592,7 +591,7 @@ class RoutineInstance {
     this.container.querySelector('.btn-exit').onclick = () => {
       window.customConfirm("Exit Routine?", () => this.destroy());
     };
-    }
+}
 
   completeRoutine() {
     playSFX('victory', this.panSide);
