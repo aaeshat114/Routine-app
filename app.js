@@ -396,7 +396,7 @@ function renderKidsHub() {
   routines.forEach(r => {
     const card = document.createElement('div');
     card.className = 'routine-card';
-    
+    card.textContent = r.name; // Displays the routine name on the card
     card.onclick = () => handleRoutineClick(r.id);
     grid.appendChild(card);
   });
