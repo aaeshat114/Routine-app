@@ -524,8 +524,7 @@ class RoutineInstance {
   renderTask() {
     if (this.currentTask.img) {
       this.container.style.backgroundImage = `url('${this.currentTask.img}')`;
-      this.container.style.backgroundColor = 'rgba(255,255,255,0.4)';
-      this.container.style.backgroundBlendMode = 'overlay';
+      this.container.style.backgroundBlendMode = 'normal';
     } else {
       this.container.style.backgroundImage = 'none';
       this.container.style.backgroundColor = 'transparent';
