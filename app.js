@@ -419,10 +419,10 @@ function handleRoutineClick(rId) {
       btn.onclick = () => {
         if (selectedKidsForRoutine.includes(p)) {
           selectedKidsForRoutine = selectedKidsForRoutine.filter(k => k !== p);
-          btn.style.opacity = '1';
+          btn.style.opacity = '0.5';
         } else if (selectedKidsForRoutine.length < 2) {
           selectedKidsForRoutine.push(p);
-          btn.style.opacity = '0.5';
+          btn.style.opacity = '1';
         }
       };
       list.appendChild(btn);
