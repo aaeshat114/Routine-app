@@ -352,15 +352,15 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
   .partition:only-child .btn-pause { 
     order: 2;
-    margin-right: auto; /* Pushes the kid's name & right pair away to the opposite side */
   }
   .partition:only-child .kid-name-display {
     order: 3;
-    margin-right: auto; /* Balances the name directly in the center of the screen */
     font-size: 4.8vh; /* Noticeably scaled-up child name layout */
     color: #ffffff;
     text-align: center;
-    width: auto;
+    position: absolute;
+    transformsform: 50;
+    transform: translateX(-50%);
     align-self: center;
     padding-bottom: 0;
     z-index: 2;
