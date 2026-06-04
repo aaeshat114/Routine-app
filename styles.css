@@ -331,7 +331,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding-left: 0.5vw; /* Positioned closer to the left edge */
     padding-right: 0.5vw; /* Positioned closer to the right edge */
     padding-bottom: 0;
-    gap: 0 0.8vw; /* Tight pair margins */
+    gap: 0 2.5vw; /* Tight pair margins */
   }
 
   /* Explicitly make the task name text box look huge for single-child workflows */
@@ -342,7 +342,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   /* Make image canvas container safely smaller to make space for dominant text and buttons */
   .partition:only-child .partition-middle {
     height: 100%;
-    top: 5%;
     padding-bottom: 5vh;
     padding-top: 5vh;
   }
