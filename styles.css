@@ -359,6 +359,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     font-size: 4.8vh; /* Noticeably scaled-up child name layout */
     color: #ffffff;
     text-align: center;
+    margin-right: auto;
     width: 100%;
     align-self: center;
     padding-bottom: 0;
