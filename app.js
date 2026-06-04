@@ -193,31 +193,52 @@ async function initApp() {
 }
 
 function switchView(viewName) {
+function switchView(viewName) {
   Object.values(UI).forEach(el => { if (el) el.classList.add('hidden'); });
-  
+  let activeEl = null;
+
   if (viewName === 'kidsHub') { 
     UI.kidsHub.classList.remove('hidden'); 
     currentMode = 'kids'; 
     UI.navToggle.style.display = 'block'; 
     UI.navToggle.className = 'nav-toggle kids-mode';
+    activeEl = UI.kidsHub;
   }
   if (viewName === 'parentDash') { 
     UI.parentDash.classList.remove('hidden'); 
     currentMode = 'parent'; 
     renderParentDash(); 
-    UI.navToggle.style.display = 'block'; 
+    UI.navToggle.style.display = 'block';
     UI.navToggle.className = 'nav-toggle parent-mode';
+    activeEl = UI.parentDash;
   }
   if (viewName === 'activeRoutine') { 
     UI.activeRoutine.classList.remove('hidden'); 
-    UI.navToggle.style.display = 'none'; 
+    UI.navToggle.style.display = 'none';
+    activeEl = UI.activeRoutine;
   }
   if (viewName === 'routineBuilder') { 
     UI.routineBuilder.classList.remove('hidden'); 
-    UI.navToggle.style.display = 'none'; 
+    UI.navToggle.style.display = 'none';
+    activeEl = UI.routineBuilder;
+  }
+
+  // Dynamically update the PWA theme color tag based on the visible element's background
+  if (activeEl) {
+    requestAnimationFrame(() => {
+      const metaTag = document.getElementById('pwa-theme-color');
+      if (metaTag) {
+        // If the view has a nested partition container, check its color instead
+        const partition = activeEl.querySelector('.partition');
+        const elementToMeasure = partition || activeEl;
+        
+        // This captures current colors automatically, whether hex, rgb, or CSS variables
+        const computedBg = window.getComputedStyle(elementToMeasure).backgroundColor;
+        metaTag.setAttribute('content', computedBg);
+      }
+    });
   }
 }
-
 
 UI.navToggle.addEventListener('click', () => {
   if (currentMode === 'kids') {
