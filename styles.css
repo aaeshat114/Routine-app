@@ -280,66 +280,91 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 .btn-finish.overtime { animation: overtime-loop 10s infinite linear; }
 
-/* ==========================================
-   9. Responsive Orientations & Media Queries
-   ========================================== */
+/* ==========================================================================
+   Responsive Orientations & Multi-Device Sizing Tweaks
+   ========================================================================== */
 
 @media (orientation: landscape) { 
   .split-screen-container { 
     flex-direction: row;
   } 
+  
   .nav-toggle.kids-mode { 
     top: 25px; 
     bottom: auto;
   } 
 
-  .kid-name-display {
-    width: auto;
-    padding-bottom: 0;
-    align-self: center;
+  /* Lower the task name bar slightly */
+  .partition-top {
+    margin-top: 3vh;
   }
 
-  /* Fallback centering alignment structure for multiplayer splits */
+  .partition .header-bar { 
+    font-size: 4vh; /* Bigger text size for laptop/tablet/phone screens */
+    padding: 1.2vh 40px; 
+    max-width: 80%;
+  }
+
+  /* Make image slightly smaller and lift it up to clear the bottom zone */
+  .partition-middle {
+    height: 80%;
+    top: 2%;
+    padding-bottom: 10vh;
+  }
+
+  /* Fallback centering alignment structure for multiplayer landscape splits */
   .partition-controls {
     justify-content: center;
     gap: 1.5vh 3vw;
-    padding-bottom: 2vh;
+    padding-bottom: 2.5vh;
   }
 
-  /* Single-player variant: optimized for maximum image real-estate and tight edge groupings */
+  /* Single-player landscape execution: corners split, background graphic expands */
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
-    padding-left: 2vw;  
-    padding-right: 2vw;
-    padding-bottom: 2vh; 
-    gap: 0 1.5vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding-left: 1vw;   /* Brings left-side button pair closer to the screen edge */
+    padding-right: 1vw;  /* Brings right-side button pair closer to the screen edge */
+    padding-bottom: 2.5vh; /* Prevents cutoff on tablets/laptops */
+    gap: 0 1vw;          /* Smaller gap inside each pair of immediate buttons */
   }
   
   /* Layout Ordering and Separation for Single Player Landscape */
   .partition:only-child .btn-finish { 
-    order: 1;
+    order: 1; 
   }
   .partition:only-child .btn-pause { 
     order: 2; 
-    margin-right: auto; /* Pushes center name away from left pair */
+    margin-right: auto; /* Pushes the kid's name to the absolute center */
   }
   .partition:only-child .kid-name-display {
     order: 3;
-    margin-right: auto; /* Pushes right pair away from center name */
+    margin-right: auto; /* Pushes the right-side buttons to the absolute right edge */
+    font-size: 3vh;     /* Bigger text size for kid's name */
+    color: #ffffff;
+    text-align: center;
+    width: auto;
+    align-self: center;
+    padding-bottom: 0;
+    z-index: 2;
   }
   .partition:only-child .btn-skip { 
-    order: 4;
+    order: 4; 
   }
   .partition:only-child .btn-exit { 
-    order: 5;
+    order: 5; 
   }
 
-  /* Responsive, scaled-down button sizing specifically for single-player landscape */
+  /* Responsive, scaled-up button sizes across phone, tablet, and laptop */
   .partition:only-child .partition-controls .kid-btn {
-    padding: 1vh 2.5vw;
-    font-size: 1.8vh;
-    min-width: 11vw;
+    padding: 1.4vh 2.5vw;
+    font-size: 2.2vh;  /* Bigger text inside buttons */
+    min-width: 12vw;   /* Chunkier, easily tappable buttons */
   }
 }
 
@@ -347,36 +372,60 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .split-screen-container { 
     flex-direction: column;
   } 
+  
   .nav-toggle.kids-mode { 
     top: auto; 
     bottom: 25px;
   } 
+  
   .partition { 
-    padding: 1.5vh 4vw;
+    padding: 1.5vh 4vw; 
   } 
+
+  /* Move task name bar slightly lower and increase size */
+  .partition-top {
+    margin-top: 4vh;
+    width: 100%;
+  }
+
   .partition .header-bar { 
-    font-size: 3vh; 
-    padding: 0.8vh 20px; 
-    max-width: 85%;
+    font-size: 3.6vh; /* Slightly larger text size */
+    padding: 1vh 25px; 
+    max-width: 90%;
   } 
+
+  /* Increase gap between task name bar and timer */
   .timer-bar { 
-    height: 1.2vh; 
-    margin-top: 1vh; 
-    max-width: 85%;
+    height: 1.4vh; 
+    margin-top: 2.5vh; 
+    max-width: 90%; 
   } 
   
+  /* Lift image up: turn container relative so it flawlessly vertical-centers 
+     itself inside the clear window between top headers and bottom buttons */
+  .partition-middle {
+    position: relative;
+    flex: 1;
+    height: auto;
+    width: 100%;
+    top: auto;
+    left: auto;
+    padding: 2vh 0 0 0;
+  }
+
   /* Redefine controls into a structural 2x2 grid framework for portrait mode */
   .partition-controls { 
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5vh 3vw; 
+    gap: 2.5vh 4vw; /* Slightly increased vertical gap between the button rows */
     width: 100%;
     max-width: 90%;
-    margin: auto auto 1vh auto;
+    margin: 1vh auto 0.5vh auto; /* Moved up slightly to give name more breathing room */
     padding-bottom: 0.5vh;
     pointer-events: auto; 
   } 
+
   .partition-controls .kid-btn { 
     padding: 1.2vh 2vw;
     font-size: 1.8vh; 
@@ -385,19 +434,21 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     text-align: center;
   } 
 
-  /* Layout Ordering for Portrait Grid */
+  /* Layout Grid Ordering for Portrait Elements */
   .partition-controls .btn-finish { order: 1; }
   .partition-controls .btn-pause { order: 2; }
   .partition-controls .btn-skip { order: 3; }
   .partition-controls .btn-exit { order: 4; }
 
+  /* Kid's name placement completely below the 2x2 layout grid */
   .partition-controls .kid-name-display { 
     order: 5;
-    grid-column: span 2; /* Forces name to sit below the 2x2 grid rows */
+    grid-column: span 2; 
     text-align: center;
-    font-size: 2vh;
-    padding-top: 1vh;
-    padding-bottom: 0.5vh; 
+    font-size: 2.6vh; /* Slightly larger text size */
+    color: #ffffff;
+    padding-top: 2vh;     /* Pushes it slightly lower away from buttons */
+    padding-bottom: 1.5vh; 
     width: 100%;
   } 
 }
