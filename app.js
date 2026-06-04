@@ -192,6 +192,21 @@ async function initApp() {
   setupEventListeners();
 }
 
+function updatePWAThemeColor() {
+  const metaTag = document.getElementById('pwa-theme-color');
+  if (metaTag) {
+    // Find the currently active view that is not hidden
+    const activeEl = Object.values(UI).find(el => el && !el.classList.contains('hidden'));
+    if (activeEl) {
+      // Check for a nested partition first, otherwise measure the view container itself
+      const partition = activeEl.querySelector('.partition');
+      const elementToMeasure = partition || activeEl;
+      const computedBg = window.getComputedStyle(elementToMeasure).backgroundColor;
+      metaTag.setAttribute('content', computedBg);
+    }
+  }
+}
+
 function switchView(viewName) {
   Object.values(UI).forEach(el => { if (el) el.classList.add('hidden'); });
   let activeEl = null;
@@ -221,22 +236,8 @@ function switchView(viewName) {
     UI.navToggle.style.display = 'none';
     activeEl = UI.routineBuilder;
   }
-
-  // Dynamically update the PWA theme color tag based on the visible element's background
-  if (activeEl) {
-    requestAnimationFrame(() => {
-      const metaTag = document.getElementById('pwa-theme-color');
-      if (metaTag) {
-        // If the view has a nested partition container, check its color instead
-        const partition = activeEl.querySelector('.partition');
-        const elementToMeasure = partition || activeEl;
-        
-        // This captures current colors automatically, whether hex, rgb, or CSS variables
-        const computedBg = window.getComputedStyle(elementToMeasure).backgroundColor;
-        metaTag.setAttribute('content', computedBg);
-      }
-    });
-  }
+  
+  requestAnimationFrame(updatePWAThemeColor);
 }
 
 UI.navToggle.addEventListener('click', () => {
@@ -563,10 +564,14 @@ class RoutineInstance {
           if (d < minD) { minD = d; closest = hex; }
         });
         this.container.style.backgroundColor = closest;
+        
+        requestAnimationFrame(updatePWAThemeColor);
       };
     } else {
       this.container.style.backgroundImage = 'none';
       this.container.style.backgroundColor = 'transparent';
+
+      requestAnimationFrame(updatePWAThemeColor);
     }
 
             this.container.innerHTML = `
