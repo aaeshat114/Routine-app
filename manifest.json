@@ -3,8 +3,8 @@
   "short_name": "RoutineFlow",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4caf50",
+  "background_color": "#b4c3dd",
+  "theme_color": "#b4c3dd",
   "orientation": "any",
   "icons": [
     {
