@@ -305,9 +305,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     max-width: 80%;
   }
 
-  .timer-bar {
-  max-width: 80%;
-
   /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
   .partition-middle {
     height: 72%;
@@ -345,7 +342,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   /* Make image canvas container safely smaller to make space for dominant text and buttons */
   .partition:only-child .partition-middle {
     height: 100%;
-    padding-bottom: 20vh;
+    padding-bottom: 5vh;
     padding-top: 5vh;
   }
   
