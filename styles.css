@@ -57,7 +57,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   background-repeat: no-repeat;
   box-shadow: none;
 }
-.nav-toggle.parent-mode::after { content: '🏠'; }
+.nav-toggle.parent-mode::after { content: ""; }
 
 /* Parent Theme */
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
