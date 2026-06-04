@@ -367,6 +367,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
   .partition:only-child .btn-skip { 
     order: 4;
+    margin-left: auto;
   }
   .partition:only-child .btn-exit { 
     order: 5;
