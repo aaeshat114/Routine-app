@@ -193,7 +193,6 @@ async function initApp() {
 }
 
 function switchView(viewName) {
-function switchView(viewName) {
   Object.values(UI).forEach(el => { if (el) el.classList.add('hidden'); });
   let activeEl = null;
 
