@@ -285,11 +285,11 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
    ========================================================================== */
 @media (orientation: landscape) { 
   .split-screen-container { 
-    [span_2](start_span)flex-direction: row;[span_2](end_span)
+    [span_1](start_span)flex-direction: row;[span_1](end_span)
   } 
   
   .nav-toggle.kids-mode { 
-    top: 25px; 
+    [span_2](start_span)top: 25px;[span_2](end_span)
     [span_3](start_span)bottom: auto;[span_3](end_span)
   } 
 
@@ -298,73 +298,74 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     [span_4](start_span)margin-top: 3vh;[span_4](end_span)
   }
 
-  /* Significantly larger task name bar text size */
+  /* Noticeably larger, punchier task name text size */
   .partition .header-bar { 
     font-size: 5.5vh; 
-    padding: 1.5vh 40px; 
-    max-width: 85%;
+    [span_5](start_span)padding: 1.2vh 40px;[span_5](end_span)
+    [span_6](start_span)max-width: 80%;[span_6](end_span)
   }
 
-  /* Make image slightly smaller and lift it up to clear the chunkier bottom zone */
+  /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
   .partition-middle {
-    height: 76%;
-    top: 2%;
+    height: 72%;
+    top: 3%;
     padding-bottom: 12vh;
   }
 
   /* Fallback centering alignment structure for multiplayer landscape splits */
   .partition-controls {
-    [span_5](start_span)justify-content: center;[span_5](end_span)
-    [span_6](start_span)gap: 1.5vh 3vw;[span_6](end_span)
-    [span_7](start_span)padding-bottom: 2.5vh;[span_7](end_span)
+    [span_7](start_span)justify-content: center;[span_7](end_span)
+    [span_8](start_span)gap: 1.5vh 3vw;[span_8](end_span)
+    [span_9](start_span)padding-bottom: 2.5vh;[span_9](end_span)
   }
 
-  /* Single-player landscape execution: corners split, background graphic expands */
+  /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
-    [span_8](start_span)display: flex;[span_8](end_span)
-    [span_9](start_span)justify-content: flex-start;[span_9](end_span)
-    [span_10](start_span)position: absolute;[span_10](end_span)
-    [span_11](start_span)bottom: 0;[span_11](end_span)
-    [span_12](start_span)left: 0;[span_12](end_span)
-    [span_13](start_span)width: 100%;[span_13](end_span)
-    [span_14](start_span)height: auto;[span_14](end_span)
-    padding-left: 0.5vw;  /* Brings left-side button pair right up to the screen margin */
-    padding-right: 0.5vw; /* Brings right-side button pair right up to the screen margin */
-    padding-bottom: 2vh;  
-    gap: 0 0.8vw;         /* Tight, cozy gap inside each immediate pair */
+    [span_10](start_span)display: flex;[span_10](end_span)
+    [span_11](start_span)justify-content: flex-start;[span_11](end_span)
+    [span_12](start_span)position: absolute;[span_12](end_span)
+    [span_13](start_span)bottom: 0;[span_13](end_span)
+    [span_14](start_span)left: 0;[span_14](end_span)
+    [span_15](start_span)width: 100%;[span_15](end_span)
+    [span_16](start_span)height: auto;[span_16](end_span)
+    padding-left: 0.5vw;   /* Flushes left pair right up against the screen boundary */
+    padding-right: 0.5vw;  /* Flushes right pair right up against the screen boundary */
+    [span_17](start_span)padding-bottom: 2vh;[span_17](end_span)
+    gap: 0 0.5vw;          /* Tighter inner gaps between immediate pairs */
   }
   
   /* Layout Ordering and Separation for Single Player Landscape */
   .partition:only-child .btn-finish { 
-    [span_15](start_span)order: 1;[span_15](end_span)
+    [span_18](start_span)order: 1;[span_18](end_span)
   }
   .partition:only-child .btn-pause { 
-    order: 2; 
-    [span_16](start_span)margin-right: auto;[span_16](end_span) /* Pushes the kid's name to the absolute center */
+    [span_19](start_span)order: 2;[span_19](end_span)
+    [span_20](start_span)margin-right: auto;[span_20](end_span) /* Pushes the kid's name & right pair away to the opposite side */
   }
   .partition:only-child .kid-name-display {
-    [span_17](start_span)order: 3;[span_17](end_span)
-    [span_18](start_span)margin-right: auto;[span_18](end_span) /* Pushes the right-side buttons to the absolute right edge */
-    font-size: 3.5vh;   /* Clear, legible text size for kid's name */
-    [span_19](start_span)color: #ffffff;[span_19](end_span)
-    [span_20](start_span)text-align: center;[span_20](end_span)
-    [span_21](start_span)width: auto;[span_21](end_span)
-    [span_22](start_span)align-self: center;[span_22](end_span)
-    [span_23](start_span)padding-bottom: 0;[span_23](end_span)
-    [span_24](start_span)z-index: 2;[span_24](end_span)
+    [span_21](start_span)order: 3;[span_21](end_span)
+    [span_22](start_span)margin-right: auto;[span_22](end_span) /* Balances the name directly in the center of the screen */
+    font-size: 3.5vh; 
+    [span_23](start_span)color: #ffffff;[span_23](end_span)
+    [span_24](start_span)text-align: center;[span_24](end_span)
+    [span_25](start_span)width: auto;[span_25](end_span)
+    [span_26](start_span)align-self: center;[span_26](end_span)
+    [span_27](start_span)padding-bottom: 0;[span_27](end_span)
+    [span_28](start_span)z-index: 2;[span_28](end_span)
   }
   .partition:only-child .btn-skip { 
-    [span_25](start_span)order: 4;[span_25](end_span)
+    [span_29](start_span)order: 4;[span_29](end_span)
   }
   .partition:only-child .btn-exit { 
-    [span_26](start_span)order: 5;[span_26](end_span)
+    [span_30](start_span)order: 5;[span_30](end_span)
   }
 
-  /* Chunkier, highly accessible responsive button sizing */
+  /* Chunkier, highly touch-accessible buttons with maximized text scale */
   .partition:only-child .partition-controls .kid-btn {
-    padding: 2vh 3.5vw;  /* Generous touch targets */
-    font-size: 2.6vh;    /* Noticeably larger action labels */
-    min-width: 14vw;      
+    padding: 1.8vh 3.5vw;  /* Larger tapping surface area */
+    font-size: 2.6vh;      /* Clearly visible button label size */
+    min-width: 15vw;       
+    margin: 0 0.4vw;       /* Overrides global 10px margin to let buttons hit the edges */
   }
 }
 
