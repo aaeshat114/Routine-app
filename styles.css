@@ -284,7 +284,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
    Responsive Orientations & Multi-Device Sizing Tweaks
    ========================================================================== */
 
-@media (orientation: landscape) { 
+ @media (orientation: landscape) { 
   .split-screen-container { 
     flex-direction: row;
   } 
@@ -294,79 +294,115 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     bottom: auto;
   } 
 
+  .partition {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh 2vw;
+    height: 100%;
+  }
+
   /* Lower the task name bar slightly */
   .partition-top {
-    margin-top: 3vh;
-  }
-
-  .partition .header-bar { 
-    font-size: 4vh; /* Bigger text size for laptop/tablet/phone screens */
-    padding: 1.2vh 40px; 
-    max-width: 80%;
-  }
-
-  /* Make image slightly smaller and lift it up to clear the bottom zone */
-  .partition-middle {
-    height: 80%;
-    top: 2%;
-    padding-bottom: 10vh;
-  }
-
-  /* Fallback centering alignment structure for multiplayer landscape splits */
-  .partition-controls {
-    justify-content: center;
-    gap: 1.5vh 3vw;
-    padding-bottom: 2.5vh;
-  }
-
-  /* Single-player landscape execution: corners split, background graphic expands */
-  .partition:only-child .partition-controls {
+    margin-top: 4vh;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  /* Noticeably larger task name text size across phone, tablet, and laptop */
+  .partition .header-bar { 
+    font-size: 5.5vh; 
+    padding: 1.5vh 40px; 
+    max-width: 85%;
+  }
+
+  .timer-bar {
+    margin-top: 1.8vh;
+    height: 1.6vh;
+    max-width: 85%;
+  }
+
+  /* Image Container Flow: switch from absolute to relative flex 
+     to lift the image higher, make it slightly smaller, and prevent any button cutoffs */
+  .partition-body-combined {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; 
+    position: relative;
+  }
+
+  .partition-middle {
+    position: relative;
+    flex: 1;
     width: 100%;
     height: auto;
-    padding-left: 1vw;   /* Brings left-side button pair closer to the screen edge */
-    padding-right: 1vw;  /* Brings right-side button pair closer to the screen edge */
-    padding-bottom: 2.5vh; /* Prevents cutoff on tablets/laptops */
-    gap: 0 1vw;          /* Smaller gap inside each pair of immediate buttons */
+    top: auto;
+    left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vh 0;
+    max-height: 42vh; /* Keeps image slightly smaller to leave room for large buttons */
+    margin: auto;
   }
+
+  .task-display-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Bottom Controls Flex Zone: sits safely at the bottom without overlapping */
+  .partition-controls {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5vw 2vh 1.5vw; /* Brings edge pairs much closer to the screen margins */
+    pointer-events: auto; 
+    gap: 0;
+  }
+
+  /* Structural Button Pairs Alignment & Layout Order */
+  .partition-controls .btn-finish { order: 1; }
+  .partition-controls .btn-pause { order: 2; margin-right: auto; } /* Pushes name/right buttons away */
   
-  /* Layout Ordering and Separation for Single Player Landscape */
-  .partition:only-child .btn-finish { 
-    order: 1; 
-  }
-  .partition:only-child .btn-pause { 
-    order: 2; 
-    margin-right: auto; /* Pushes the kid's name to the absolute center */
-  }
-  .partition:only-child .kid-name-display {
+  /* Centered, highly visible Kid's Name Display */
+  .partition-controls .kid-name-display {
     order: 3;
-    margin-right: auto; /* Pushes the right-side buttons to the absolute right edge */
-    font-size: 3vh;     /* Bigger text size for kid's name */
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 4.5vh; /* Noticeably bigger text size for the kid's name */
     color: #ffffff;
     text-align: center;
     width: auto;
     align-self: center;
-    padding-bottom: 0;
+    padding: 0 2vw;
     z-index: 2;
   }
-  .partition:only-child .btn-skip { 
-    order: 4; 
-  }
-  .partition:only-child .btn-exit { 
-    order: 5; 
-  }
+  
+  .partition-controls .btn-skip { order: 4; margin-left: auto; } /* Pulls right pair tight to the edge */
+  .partition-controls .btn-exit { order: 5; }
 
-  /* Responsive, scaled-up button sizes across phone, tablet, and laptop */
-  .partition:only-child .partition-controls .kid-btn {
-    padding: 1.4vh 2.5vw;
-    font-size: 2.2vh;  /* Bigger text inside buttons */
-    min-width: 12vw;   /* Chunkier, easily tappable buttons */
+  /* Chunkier buttons with significantly bigger text across all screens */
+  .partition-controls .kid-btn {
+    padding: 1.8vh 3.2vw; /* Generous, easily tappable scaling */
+    font-size: 2.6vh;     /* Unmistakably larger label text */
+    min-width: 14vw;      
+    margin: 0 0.6vw;      /* Tight, smaller gap inside each pair of immediate buttons */
   }
-}
+ }
 
 @media (orientation: portrait) { 
   .split-screen-container { 
