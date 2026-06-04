@@ -284,45 +284,80 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
    Responsive Orientations & Multi-Device Sizing Tweaks
    ========================================================================== */
 @media (orientation: landscape) { 
-  /* ... keep your existing .split-screen-container, .nav-toggle, and .partition-top rules ... */
+  .split-screen-container { 
+    flex-direction: row;
+  } 
+  
+  .nav-toggle.kids-mode { 
+    top: 25px;
+    bottom: auto;
+  } 
+
+  /* Lower the task name bar slightly */
+  .partition-top {
+    margin-top: 3vh;
+  }
 
   /* Noticeably larger, punchier task name text size */
   .partition .header-bar { 
-    font-size: 7vh; /* Increased from 5.5vh */
-    padding: 1.5vh 40px; 
+    font-size: 5.5vh;
+    padding: 1.2vh 40px;
     max-width: 80%;
   }
 
-  /* Shrunk image height to make space for larger top and bottom elements */
+  /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
   .partition-middle {
-    height: 60%; /* Reduced from 72% */
-    top: 6%; /* Shifted down slightly */
+    height: 72%;
+    top: 3%;
     padding-bottom: 12vh;
   }
 
-  /* ... keep your existing fallback centering alignment structure ... */
+  /* Fallback centering alignment structure for multiplayer landscape splits */
+  .partition-controls {
+    justify-content: center;
+    gap: 1.5vh 3vw;
+    padding-bottom: 2.5vh;
+  }
 
   /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
     position: absolute;
-    bottom: 0;
+    bottom: 4vh; /* Moved away from the physical bottom edge */
     left: 0;
     width: 100%;
     height: auto;
-    padding-left: 0.5vw;  /* Keeps left pair right up against the screen boundary */
-    padding-right: 0.5vw; /* Keeps right pair right up against the screen boundary */
-    padding-bottom: 5vh;  /* Increased from 2vh to push buttons further up from bottom edge */
-    gap: 0 0.5vw;
+    padding-left: 1.5vw; /* Positioned closer to the left edge */
+    padding-right: 1.5vw; /* Positioned closer to the right edge */
+    padding-bottom: 0;
+    gap: 0 0.8vw; /* Tight pair margins */
+  }
+
+  /* Explicitly make the task name text box look huge for single-child workflows */
+  .partition:only-child .header-bar {
+    font-size: 7.2vh;
+  }
+
+  /* Make image canvas container safely smaller to make space for dominant text and buttons */
+  .partition:only-child .partition-middle {
+    height: 58%;
+    top: 5%;
+    padding-bottom: 14vh;
   }
   
-  /* ... keep your existing layout ordering rules for .btn-finish and .btn-pause ... */
-
+  /* Layout Ordering and Separation for Single Player Landscape */
+  .partition:only-child .btn-finish { 
+    order: 1;
+  }
+  .partition:only-child .btn-pause { 
+    order: 2;
+    margin-right: auto; /* Pushes the kid's name & right pair away to the opposite side */
+  }
   .partition:only-child .kid-name-display {
     order: 3;
     margin-right: auto; /* Balances the name directly in the center of the screen */
-    font-size: 5vh; /* Increased from 3.5vh for a much larger name */
+    font-size: 4.8vh; /* Noticeably scaled-up child name layout */
     color: #ffffff;
     text-align: center;
     width: auto;
@@ -330,18 +365,21 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding-bottom: 0;
     z-index: 2;
   }
-
-  /* ... keep your existing layout ordering rules for .btn-skip and .btn-exit ... */
+  .partition:only-child .btn-skip { 
+    order: 4;
+  }
+  .partition:only-child .btn-exit { 
+    order: 5;
+  }
 
   /* Chunkier, highly touch-accessible buttons with maximized text scale */
   .partition:only-child .partition-controls .kid-btn {
-    padding: 2.2vh 4vw;   /* Larger tapping surface area, increased from 1.8vh 3.5vw */
-    font-size: 3.2vh;     /* Clearly visible button label size, increased from 2.6vh */
-    min-width: 18vw;      /* Wider minimum width to match larger text */
-    margin: 0 0.4vw;      /* Keeps margins tight so buttons hug the edges */
+    padding: 2.2vh 3.8vw; /* Significantly larger chunkier tap surface */
+    font-size: 3.2vh; /* Extra large visible button font label */
+    min-width: 16vw;       
+    margin: 0; /* Clear margins to let code-driven alignments handle edges */
   }
 }
-
 @media (orientation: portrait) { 
   .split-screen-container { 
     flex-direction: column;
