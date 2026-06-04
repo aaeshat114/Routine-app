@@ -341,9 +341,10 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 
   /* Make image canvas container safely smaller to make space for dominant text and buttons */
   .partition:only-child .partition-middle {
-    height: 65%;
+    height: 100%;
     top: 5%;
     padding-bottom: 5vh;
+    padding-top: 5vh;
   }
   
   /* Layout Ordering and Separation for Single Player Landscape */
