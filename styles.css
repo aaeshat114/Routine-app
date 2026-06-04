@@ -284,88 +284,61 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
    Responsive Orientations & Multi-Device Sizing Tweaks
    ========================================================================== */
 @media (orientation: landscape) { 
-  .split-screen-container { 
-    [span_1](start_span)flex-direction: row;[span_1](end_span)
-  } 
-  
-  .nav-toggle.kids-mode { 
-    [span_2](start_span)top: 25px;[span_2](end_span)
-    [span_3](start_span)bottom: auto;[span_3](end_span)
-  } 
-
-  /* Lower the task name bar slightly */
-  .partition-top {
-    [span_4](start_span)margin-top: 3vh;[span_4](end_span)
-  }
+  /* ... keep your existing .split-screen-container, .nav-toggle, and .partition-top rules ... */
 
   /* Noticeably larger, punchier task name text size */
   .partition .header-bar { 
-    font-size: 5.5vh; 
-    [span_5](start_span)padding: 1.2vh 40px;[span_5](end_span)
-    [span_6](start_span)max-width: 80%;[span_6](end_span)
+    font-size: 7vh; /* Increased from 5.5vh */
+    padding: 1.5vh 40px; 
+    max-width: 80%;
   }
 
-  /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
+  /* Shrunk image height to make space for larger top and bottom elements */
   .partition-middle {
-    height: 72%;
-    top: 3%;
+    height: 60%; /* Reduced from 72% */
+    top: 6%; /* Shifted down slightly */
     padding-bottom: 12vh;
   }
 
-  /* Fallback centering alignment structure for multiplayer landscape splits */
-  .partition-controls {
-    [span_7](start_span)justify-content: center;[span_7](end_span)
-    [span_8](start_span)gap: 1.5vh 3vw;[span_8](end_span)
-    [span_9](start_span)padding-bottom: 2.5vh;[span_9](end_span)
-  }
+  /* ... keep your existing fallback centering alignment structure ... */
 
   /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
-    [span_10](start_span)display: flex;[span_10](end_span)
-    [span_11](start_span)justify-content: flex-start;[span_11](end_span)
-    [span_12](start_span)position: absolute;[span_12](end_span)
-    [span_13](start_span)bottom: 0;[span_13](end_span)
-    [span_14](start_span)left: 0;[span_14](end_span)
-    [span_15](start_span)width: 100%;[span_15](end_span)
-    [span_16](start_span)height: auto;[span_16](end_span)
-    padding-left: 0.5vw;   /* Flushes left pair right up against the screen boundary */
-    padding-right: 0.5vw;  /* Flushes right pair right up against the screen boundary */
-    [span_17](start_span)padding-bottom: 2vh;[span_17](end_span)
-    gap: 0 0.5vw;          /* Tighter inner gaps between immediate pairs */
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding-left: 0.5vw;  /* Keeps left pair right up against the screen boundary */
+    padding-right: 0.5vw; /* Keeps right pair right up against the screen boundary */
+    padding-bottom: 5vh;  /* Increased from 2vh to push buttons further up from bottom edge */
+    gap: 0 0.5vw;
   }
   
-  /* Layout Ordering and Separation for Single Player Landscape */
-  .partition:only-child .btn-finish { 
-    [span_18](start_span)order: 1;[span_18](end_span)
-  }
-  .partition:only-child .btn-pause { 
-    [span_19](start_span)order: 2;[span_19](end_span)
-    [span_20](start_span)margin-right: auto;[span_20](end_span) /* Pushes the kid's name & right pair away to the opposite side */
-  }
+  /* ... keep your existing layout ordering rules for .btn-finish and .btn-pause ... */
+
   .partition:only-child .kid-name-display {
-    [span_21](start_span)order: 3;[span_21](end_span)
-    [span_22](start_span)margin-right: auto;[span_22](end_span) /* Balances the name directly in the center of the screen */
-    font-size: 3.5vh; 
-    [span_23](start_span)color: #ffffff;[span_23](end_span)
-    [span_24](start_span)text-align: center;[span_24](end_span)
-    [span_25](start_span)width: auto;[span_25](end_span)
-    [span_26](start_span)align-self: center;[span_26](end_span)
-    [span_27](start_span)padding-bottom: 0;[span_27](end_span)
-    [span_28](start_span)z-index: 2;[span_28](end_span)
+    order: 3;
+    margin-right: auto; /* Balances the name directly in the center of the screen */
+    font-size: 5vh; /* Increased from 3.5vh for a much larger name */
+    color: #ffffff;
+    text-align: center;
+    width: auto;
+    align-self: center;
+    padding-bottom: 0;
+    z-index: 2;
   }
-  .partition:only-child .btn-skip { 
-    [span_29](start_span)order: 4;[span_29](end_span)
-  }
-  .partition:only-child .btn-exit { 
-    [span_30](start_span)order: 5;[span_30](end_span)
-  }
+
+  /* ... keep your existing layout ordering rules for .btn-skip and .btn-exit ... */
 
   /* Chunkier, highly touch-accessible buttons with maximized text scale */
   .partition:only-child .partition-controls .kid-btn {
-    padding: 1.8vh 3.5vw;  /* Larger tapping surface area */
-    font-size: 2.6vh;      /* Clearly visible button label size */
-    min-width: 15vw;       
-    margin: 0 0.4vw;       /* Overrides global 10px margin to let buttons hit the edges */
+    padding: 2.2vh 4vw;   /* Larger tapping surface area, increased from 1.8vh 3.5vw */
+    font-size: 3.2vh;     /* Clearly visible button label size, increased from 2.6vh */
+    min-width: 18vw;      /* Wider minimum width to match larger text */
+    margin: 0 0.4vw;      /* Keeps margins tight so buttons hug the edges */
   }
 }
 
