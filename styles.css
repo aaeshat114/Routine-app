@@ -104,7 +104,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 
 .no-btn { background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 15px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 8px; box-shadow: 0 6px 0 #236926; transition: all 0.1s; }
 .no-btn:active { transform: translateY(6px); box-shadow: none; }
-.yes-btn { background: #ff5722; color: white; border: none; padding: 15px 30px; font-size: 15px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 8px; box-shadow: 0 6px 0 #a32903; transition: all 0.1s; transform: rotate(-3deg); }
+.yes-btn { background: #dd3938; color: white; border: none; padding: 15px 30px; font-size: 15px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 8px; box-shadow: 0 6px 0 #8a2424; transition: all 0.1s; transform: rotate(-3deg); }
 .yes-btn:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
 
 
@@ -116,7 +116,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-pause:active { transform: translateY(6px); box-shadow: none; }
 .btn-skip { background: #ff9800; box-shadow: 0 6px 0 #e65100; }
 .btn-skip:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
-.btn-exit { background: #ff5722; box-shadow: 0 6px 0 #a32903; }
+.btn-exit { background: #dd3938; box-shadow: 0 6px 0 #8a2424; }
 .btn-exit:active { transform: translateY(6px); box-shadow: none; }
 .kid-btn:disabled { background: #b0b0b0 !important; color: #666666 !important; cursor: not-allowed; box-shadow: 0 6px 0 #303030 !important; transform: none !important; opacity: 0.6; }
 
