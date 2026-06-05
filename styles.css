@@ -362,6 +362,76 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
 }
 
+  /* =========================================
+     TWO-KIDS MODE (Side-by-Side)
+     ========================================= */
+  
+  .partition:not(:only-child) {
+    padding: 1.5vh 2vw;
+    border-right: 2px solid rgba(0, 0, 0, 0.1); /* Optional visual divider */
+  }
+
+  .partition:not(:only-child):last-child {
+    border-right: none;
+  }
+
+  .partition:not(:only-child) .partition-top {
+    margin-top: 2vh;
+  }
+
+  .partition:not(:only-child) .header-bar {
+    font-size: 3.5vh;
+    padding: 1vh 15px;
+    max-width: 95%;
+  }
+
+  .partition:not(:only-child) .partition-middle {
+    position: relative;
+    height: auto;
+    flex: 1;
+    top: auto;
+    padding: 2vh 0 0 0;
+  }
+
+  .partition:not(:only-child) .partition-controls {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2vh 2vw;
+    width: 100%;
+    max-width: 95%;
+    margin: 1vh auto;
+    padding-bottom: 1vh;
+    justify-content: stretch;
+    bottom: auto;
+  }
+
+  .partition:not(:only-child) .partition-controls .kid-btn {
+    padding: 1.2vh 1vw;
+    font-size: 1.8vh;
+    margin: 0;
+    width: 100%;
+    min-width: 0; 
+    text-align: center;
+  }
+
+  .partition:not(:only-child) .btn-finish { order: 1; }
+  .partition:not(:only-child) .btn-pause { order: 2; margin-right: 0; }
+  .partition:not(:only-child) .btn-skip { order: 3; margin-left: 0; }
+  .partition:not(:only-child) .btn-exit { order: 4; }
+
+  .partition:not(:only-child) .kid-name-display {
+    order: 5;
+    grid-column: span 2;
+    text-align: center;
+    font-size: 2.6vh;
+    color: #ffffff;
+    padding-top: 1.5vh;
+    width: 100%;
+    margin: 0;
+  }
+}
+
 @media (orientation: portrait) { 
   .split-screen-container { 
     flex-direction: column;
