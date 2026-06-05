@@ -517,7 +517,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
 
   .partition:not(:only-child) .partition-top {
-    margin-top: 4vh;
+    margin-top: 0.2vh;
     width: 100%;
   }
 
