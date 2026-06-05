@@ -285,46 +285,47 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 /* ==========================================================================
    Responsive Orientations & Multi-Device Sizing Tweaks
    ========================================================================== */
-
-/* Outer Layout: 1x2 Grid implementation */
-.split-screen-container {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  /* Default: Stacked vertically (Portrait) */
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-}
-
-@media (orientation: landscape) {
-  /* Switch to side-by-side (Landscape) */
-  .split-screen-container {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
+@media (orientation: landscape) { 
+  .split-screen-container { 
+    flex-direction: row;
+  } 
   
   .nav-toggle.kids-mode { 
     top: 25px;
     bottom: auto;
   } 
 
-  .partition-top { margin-top: 3vh; }
+  /* Lower the task name bar slightly */
+  .partition-top {
+    margin-top: 3vh;
+  }
 
+  /* Noticeably larger, punchier task name text size */
   .partition .header-bar { 
     font-size: 5.5vh;
     padding: 1.2vh 40px;
     max-width: 80%;
   }
 
-  .timer-bar { max-width: 80%; }
+  .timer-bar {
+    max-width: 80%;
+  }
 
+  /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
   .partition-middle {
     height: 72%;
     top: 3%;
     padding-bottom: 12vh;
   }
 
-  /* Dual-player landscape: Force the insides to copy the portrait 2x2 grid */
+  /* Fallback centering alignment structure for multiplayer landscape splits */
+  .partition-controls {
+    justify-content: center;
+    gap: 1.5vh 3vw;
+    padding-bottom: 2.5vh;
+  }
+
+  /* Dual-player landscape: Force the insides to copy the portrait 2x2 grid layout */
   .partition:not(:only-child) .partition-controls {
     position: relative;
     display: grid;
@@ -337,7 +338,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     pointer-events: auto;
   }
 
-  /* (Remaining button and name styling for dual-mode landscape as provided previously) */
   .partition:not(:only-child) .partition-controls .kid-btn {
     padding: 1.2vh 2vw;
     font-size: 1.8vh; 
@@ -346,6 +346,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     text-align: center;
   }
 
+  /* Grid Ordering & Name Placement for dual landscape */
   .partition:not(:only-child) .btn-finish { order: 1; }
   .partition:not(:only-child) .btn-pause { order: 2; }
   .partition:not(:only-child) .btn-skip { order: 3; }
@@ -362,17 +363,22 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     width: 100%;
   }
 
-  /* Single-player landscape remains optimized for width */
+  /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
     position: absolute;
-    bottom: 4vh;
+    bottom: 4vh; /* Moved away from the physical bottom edge */
     left: 0;
     width: 100%;
-    gap: 0 2.5vw;
+    height: auto;
+    padding-left: 0.5vw; /* Positioned closer to the left edge */
+    padding-right: 0.5vw; /* Positioned closer to the right edge */
+    padding-bottom: 0;
+    gap: 0 2.5vw; /* Tight pair margins */
   }
-  
+
+  /* Explicitly make the task name text box look huge for single-child workflows */
   .partition:only-child .header-bar {
     font-size: 7.2vh;
   }
@@ -421,14 +427,21 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 
 @media (orientation: portrait) { 
+  .split-screen-container { 
+    flex-direction: column;
+  } 
+  
   .nav-toggle.kids-mode { 
     top: auto; 
     bottom: 25px;
   } 
   
-  .partition { padding: 1.5vh 4vw; } 
+  .partition { 
+    padding: 1.5vh 4vw; 
+  } 
 
-    .partition-top {
+  /* Move task name bar slightly lower and increase size */
+  .partition-top {
     margin-top: 4vh;
     width: 100%;
   }
