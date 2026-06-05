@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;700&display=swap');
+@import#ffffff url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;700&display=swap');
 
 :root {
   --bg-parent: #b4c3dd;
@@ -20,7 +20,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .hidden { display: none !important; opacity: 0; pointer-events: none; }
 .active { display: block; opacity: 1; }
 
-/* Global Navigation Anchor Container */
 .nav-toggle { 
   position: fixed; 
   z-index: 1000; 
@@ -29,7 +28,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   background: none;
 }
 
-/* Kids Hub Mode: Solid Gear Shape in Bottom Right with #7e9ed5 Fill & No Borders */
 .nav-toggle.kids-mode {
   top: auto;
   left: auto;
@@ -45,7 +43,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 .nav-toggle.kids-mode::after { content: ""; }
 
-/* Parent Dashboard Mode: Classic Top Right Circle Button Layout */
 .nav-toggle.parent-mode {
   left: auto;
   bottom: 25px;
@@ -59,14 +56,12 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 .nav-toggle.parent-mode::after { content: ""; }
 
-/* Parent Theme */
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
 .panel { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 .parent-theme input, .parent-theme button { padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; }
 .parent-theme button { background: #e0e0e0; cursor: pointer; }
 .parent-theme button.primary { background: #2196f3; color: white; border: none; }
 
-/* Kids Theme Styling Framework */
 .kids-theme { background: var(--bg-kids); color: var(--text-kids); font-family: var(--font-kids); text-align: center; }
 
 #view-kids-hub h1 {
@@ -80,7 +75,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 
 .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; padding: 20px; }
 
-/* Routine Cards Structural Layout */
 .routine-card {
   background: var(--card-kids);
   color: var(--text-kids);
@@ -126,14 +120,12 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .btn-exit:active { transform: translateY(6px); box-shadow: none; }
 .kid-btn:disabled { background: #b0b0b0 !important; color: #666666 !important; cursor: not-allowed; box-shadow: 0 6px 0 #303030 !important; transform: none !important; opacity: 0.6; }
 
-/* Modals */
 .modal { position: fixed; left: 5%; width: 90%; height: 100%; background: transparent; z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .modal-content { background: #fff; padding: 20px 15px; border-radius: 20px; position: relative; min-width: 300px; text-align: center; }
 .modal-content .close-modal { position: absolute; top: -20px; right: -20px; background: #ff5722; color: white; border: none; font-family: var(--font-kids); cursor: pointer; border-radius: 70% 30% 42% 58% / 45% 55% 55% 45%; width: 50px; height: 50px; font-size: 22px; display: flex; align-items: center; justify-content: center; }
 .grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
 .grid-3x3 button { padding: 20px; font-family: var(--font-parent); font-size: 24px; border-radius: 10px; background: #eee; border: none; cursor: pointer; }
 
-/* Image Picker Styles */
 .image-option { width: 100px; height: 100px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 4px solid transparent; transition: transform 0.1s; }
 .image-option:hover, .image-option:active { border-color: #2196f3; transform: scale(1.05); }
 #modal-image-picker .modal-content { max-width: 500px; width: 90%; max-height: 85vh; display: flex; flex-direction: column; }
@@ -143,14 +135,13 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .task-img-label { font-size: 12px; color: #666; display: block; margin-top: 5px; word-break: break-all; }
 .btn-choose-img { background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
-/* Split Screen Execution */
 .kid-name-display {
   font-family: var(--font-kids);
   font-size: 2.6vh;
   color: var(--text-kids);
   text-align: center;
-  margin-top: auto;      /* Flexbox magic: pushes name & buttons perfectly to the bottom */
-  margin-bottom: 0.8vh;  /* Gives a soft, deliberate gap right above the buttons */
+  margin-top: auto;
+  margin-bottom: 0.8vh;
   width: 100%;
 }
 
@@ -176,7 +167,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   background-color: #0d3b66;
 }
 
-/* Elastic Top Block Container */
 .partition-top {
   width: 100%;
   display: flex;
@@ -216,7 +206,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   transition: width 1s linear; 
 }
 
-/* Shared Combined Body Layout Container */
 .partition-body-combined {
   flex: 1;
   min-height: 0;
@@ -226,7 +215,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   flex-direction: column;
 }
 
-/* Image container overlays the entire available workspace */
 .partition-middle {
   position: absolute;
   top: 0;
@@ -246,7 +234,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   object-fit: contain;
 }
 
-/* Base button frame layout overlaying the bottom zone */
 .partition-controls { 
   position: absolute;
   bottom: 0;
@@ -256,11 +243,11 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   display: flex; 
   align-items: center; 
   z-index: 2; 
-  pointer-events: none; /* Let clicks transparently pass through to image background */
+  pointer-events: none;
 }
 
 .partition-controls .kid-btn { 
-  pointer-events: auto; /* Re-enable clicks explicitly for the button components */
+  pointer-events: auto;
 }
 
 .kid-name-display { 
@@ -273,7 +260,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   z-index: 2;
 }
 
-/* Overtime Animation */
 @keyframes overtime-loop {
   0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% { transform: scale(1) translateY(0) rotate(0deg); }
   5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85% { transform: scale(1.1) translateY(0) rotate(0deg); }
@@ -282,9 +268,6 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 .btn-finish.overtime { animation: overtime-loop 10s infinite linear; }
 
-/* ==========================================================================
-   Responsive Orientations & Multi-Device Sizing Tweaks
-   ========================================================================== */
 @media (orientation: landscape) { 
   .split-screen-container { 
     flex-direction: row;
@@ -295,12 +278,10 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     bottom: auto;
   } 
 
-  /* Lower the task name bar slightly */
   .partition-top {
     margin-top: 3vh;
   }
 
-  /* Noticeably larger, punchier task name text size */
   .partition .header-bar { 
     font-size: 5.5vh;
     padding: 1.2vh 40px;
@@ -311,86 +292,42 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     max-width: 80%;
   }
 
-  /* Keep the image scaled perfectly so it never overlaps the larger headers or chunkier buttons */
   .partition-middle {
     height: 72%;
     top: 3%;
     padding-bottom: 12vh;
   }
 
-  /* Fallback centering alignment structure for multiplayer landscape splits */
   .partition-controls {
     justify-content: center;
     gap: 1.5vh 3vw;
     padding-bottom: 2.5vh;
   }
 
-  /* Dual-player landscape: Force the insides to copy the portrait 2x2 grid layout */
-  .partition:not(:only-child) .partition-controls {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5vh 2vw; 
-    width: 100%;
-    max-width: 90%;
-    margin: 1vh auto;
-    padding-bottom: 1.5vh;
-    pointer-events: auto;
-  }
-
-  .partition:not(:only-child) .partition-controls .kid-btn {
-    padding: 1.2vh 2vw;
-    font-size: 1.8vh; 
-    margin: 0;
-    width: 100%;
-    text-align: center;
-  }
-
-  /* Grid Ordering & Name Placement for dual landscape */
-  .partition:not(:only-child) .btn-finish { order: 1; }
-  .partition:not(:only-child) .btn-pause { order: 2; }
-  .partition:not(:only-child) .btn-skip { order: 3; }
-  .partition:not(:only-child) .btn-exit { order: 4; }
-
-  .partition:not(:only-child) .kid-name-display {
-    order: 5;
-    grid-column: span 2; 
-    text-align: center;
-    font-size: 2.6vh; 
-    color: #ffffff;
-    padding-top: 1.5vh;
-    padding-bottom: 1.5vh; 
-    width: 100%;
-  }
-
-  /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
     display: flex;
     justify-content: flex-start;
     position: absolute;
-    bottom: 4vh; /* Moved away from the physical bottom edge */
+    bottom: 4vh;
     left: 0;
     width: 100%;
     height: auto;
-    padding-left: 0.5vw; /* Positioned closer to the left edge */
-    padding-right: 0.5vw; /* Positioned closer to the right edge */
+    padding-left: 0vw;
+    padding-right: 0vw;
     padding-bottom: 0;
-    gap: 0 2.5vw; /* Tight pair margins */
+    gap: 0 2.5vw;
   }
 
-  /* Explicitly make the task name text box look huge for single-child workflows */
   .partition:only-child .header-bar {
     font-size: 7.2vh;
   }
 
-  /* Make image canvas container safely smaller to make space for dominant text and buttons */
   .partition:only-child .partition-middle {
     height: 75%;
     top: 5%;
     padding-bottom: 5vh;
   }
   
-  /* Layout Ordering and Separation for Single Player Landscape */
   .partition:only-child .btn-finish { 
     order: 1;
   }
@@ -400,7 +337,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
   .partition:only-child .kid-name-display {
     order: 3;
-    font-size: 4.8vh; /* Noticeably scaled-up child name layout */
+    font-size: 4.8vh;
     color: #ffffff;
     text-align: center;
     margin-right: auto;
@@ -417,12 +354,11 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     order: 5;
   }
 
-  /* Chunkier, highly touch-accessible buttons with maximized text scale */
   .partition:only-child .partition-controls .kid-btn {
-    padding: 2.2vh 3.8vw; /* Significantly larger chunkier tap surface */
-    font-size: 3.2vh; /* Extra large visible button font label */
+    padding: 2.2vh 3.8vw;
+    font-size: 3.2vh;
     min-width: 16vw;       
-    margin: 0; /* Clear margins to let code-driven alignments handle edges */
+    margin: 0;
   }
 }
 
@@ -440,27 +376,23 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding: 1.5vh 4vw; 
   } 
 
-  /* Move task name bar slightly lower and increase size */
   .partition-top {
     margin-top: 4vh;
     width: 100%;
   }
 
   .partition .header-bar { 
-    font-size: 3.6vh; /* Slightly larger text size */
+    font-size: 3.6vh;
     padding: 1vh 25px; 
     max-width: 90%;
   } 
 
-  /* Increase gap between task name bar and timer */
   .timer-bar { 
     height: 1.4vh; 
     margin-top: 2.5vh; 
     max-width: 90%; 
   } 
   
-  /* Lift image up: turn container relative so it flawlessly vertical-centers 
-     itself inside the clear window between top headers and bottom buttons */
   .partition-middle {
     position: relative;
     flex: 1;
@@ -471,15 +403,14 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding: 2vh 0 0 0;
   }
 
-  /* Redefine controls into a structural 2x2 grid framework for portrait mode */
   .partition-controls { 
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2.5vh 4vw; /* Slightly increased vertical gap between the button rows */
+    gap: 2.5vh 4vw;
     width: 100%;
     max-width: 90%;
-    margin: 1vh auto 0.5vh auto; /* Moved up slightly to give name more breathing room */
+    margin: 1vh auto 0.5vh auto;
     padding-bottom: 0.5vh;
     pointer-events: auto; 
   } 
@@ -492,20 +423,18 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     text-align: center;
   } 
 
-  /* Layout Grid Ordering for Portrait Elements */
   .partition-controls .btn-finish { order: 1; }
   .partition-controls .btn-pause { order: 2; }
   .partition-controls .btn-skip { order: 3; }
   .partition-controls .btn-exit { order: 4; }
 
-  /* Kid's name placement completely below the 2x2 layout grid */
   .partition-controls .kid-name-display { 
     order: 5;
     grid-column: span 2; 
     text-align: center;
-    font-size: 2.6vh; /* Slightly larger text size */
+    font-size: 2.6vh;
     color: #ffffff;
-    padding-top: 2vh;     /* Pushes it slightly lower away from buttons */
+    padding-top: 2vh;
     padding-bottom: 1.5vh; 
     width: 100%;
   } 
