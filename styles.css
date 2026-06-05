@@ -108,9 +108,9 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .kid-btn.tilted { transform: rotate(-3deg); }
 .kid-btn.tilted:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
 
-.no-btn { background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 20px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 10px; box-shadow: 0 6px 0 #236926; transition: all 0.1s; }
+.no-btn { background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 15px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 8px; box-shadow: 0 6px 0 #236926; transition: all 0.1s; }
 .no-btn:active { transform: translateY(6px); box-shadow: none; }
-.yes-btn { background: #ff5722; color: white; border: none; padding: 15px 30px; font-size: 20px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 10px; box-shadow: 0 6px 0 #a32903; transition: all 0.1s; transform: rotate(-3deg); }
+.yes-btn { background: #ff5722; color: white; border: none; padding: 15px 30px; font-size: 15px; font-family: var(--font-kids); border-radius: var(--kid-btn-radius); cursor: pointer; margin: 8px; box-shadow: 0 6px 0 #a32903; transition: all 0.1s; transform: rotate(-3deg); }
 .yes-btn:active { transform: rotate(-3deg) translateY(6px); box-shadow: none; }
 
 
