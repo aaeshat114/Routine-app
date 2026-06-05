@@ -546,7 +546,7 @@ class RoutineInstance {
     if (this.currentTask.img) {
       this.container.style.backgroundImage = 'none'; 
       
-      const palette = ['#9edbf8', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#f78429', '#c3e8b2', '#60bba9'];
+      const palette = ['#9edbf7', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#f78429', '#c3e8b2', '#60bba9'];
       const img = new Image();
       img.src = this.currentTask.img;
       img.onload = () => {
