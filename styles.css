@@ -536,7 +536,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .partition:not(:only-child) .partition-middle {
     position: relative;
     flex: 1;
-    height: 75%;
+    height: 37.5%;
     width: auto;
     top: auto;
     left: auto;
