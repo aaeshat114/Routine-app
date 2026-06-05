@@ -122,7 +122,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 
 .modal { position: fixed; left: 5%; width: 90%; height: 100%; background: transparent; z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .modal-content { background: #fff; padding: 20px 15px; border-radius: 20px; position: relative; min-width: 300px; text-align: center; }
-.modal-content .close-modal { position: absolute; top: -20px; right: -20px; background: #dd3938; color: white; border: none; font-family: var(--font-kids); cursor: pointer; border-radius: 70% 30% 42% 58% / 45% 55% 55% 45%; width: 50px; height: 50px; font-size: 22px; display: flex; align-items: center; justify-content: center; }
+.modal-content .close-modal { position: absolute; top: -15px; right: -15px; background: #dd3938; color: white; border: none; font-family: var(--font-kids); cursor: pointer; border-radius: 70% 30% 42% 58% / 45% 55% 55% 45%; width: 50px; height: 50px; font-size: 22px; display: flex; align-items: center; justify-content: center; }
 .grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
 .grid-3x3 button { padding: 20px; font-family: var(--font-parent); font-size: 24px; border-radius: 10px; background: #eee; border: none; cursor: pointer; }
 
