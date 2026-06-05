@@ -429,38 +429,110 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   }
 }
 
-@media (orientation: portrait) { 
-  .split-screen-container { 
+@media (orientation: portrait) {
+  .split-screen-container {
     flex-direction: column;
-  } 
-  
-  .nav-toggle.kids-mode { 
-    top: auto; 
-    bottom: 25px;
-  } 
-  
-  .partition { 
-    padding: 1.5vh 4vw; 
-  } 
+  }
 
-  .partition-top {
+  /* =========================================
+     SINGLE-CHILD PORTRAIT MODE
+     ========================================= */
+  .partition:only-child {
+    padding: 3vh 5vw;
+  }
+
+  .partition:only-child .partition-top {
+    margin-top: 6vh;
+    width: 100%;
+  }
+
+  .partition:only-child .header-bar {
+    font-size: 5vh;
+    max-width: 90%;
+    padding: 1.5vh 30px;
+  }
+
+  .partition:only-child .timer-bar {
+    height: 2vh;
+    margin-top: 3vh;
+    max-width: 90%;
+  }
+
+  .partition:only-child .partition-middle {
+    position: relative;
+    flex: 1;
+    height: auto;
+    width: 100%;
+    top: auto;
+    left: auto;
+    padding: 4vh 0;
+  }
+
+  .partition:only-child .partition-controls {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3vh 4vw;
+    width: 100%;
+    max-width: 90%;
+    margin: 2vh auto 4vh auto;
+    padding-bottom: 0;
+    bottom: auto;
+    left: auto;
+    justify-content: stretch;
+  }
+
+  .partition:only-child .partition-controls .kid-btn {
+    padding: 2vh 2vw;
+    font-size: 2.5vh;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  .partition:only-child .btn-finish { order: 1; }
+  .partition:only-child .btn-pause { order: 2; margin: 0; }
+  .partition:only-child .btn-skip { order: 3; margin: 0; }
+  .partition:only-child .btn-exit { order: 4; margin: 0; }
+
+  .partition:only-child .kid-name-display {
+    order: 5;
+    grid-column: span 2;
+    text-align: center;
+    font-size: 3.5vh;
+    color: #ffffff;
+    padding-top: 3vh;
+    padding-bottom: 0;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* =========================================
+     TWO-KIDS PORTRAIT MODE
+     ========================================= */
+  .partition:not(:only-child) {
+    padding: 1.5vh 4vw;
+  }
+
+  .partition:not(:only-child) .partition-top {
     margin-top: 4vh;
     width: 100%;
   }
 
-  .partition .header-bar { 
+  .partition:not(:only-child) .header-bar {
     font-size: 3.6vh;
-    padding: 1vh 25px; 
+    padding: 1vh 25px;
     max-width: 90%;
-  } 
+  }
 
-  .timer-bar { 
-    height: 1.4vh; 
-    margin-top: 2.5vh; 
-    max-width: 90%; 
-  } 
-  
-  .partition-middle {
+  .partition:not(:only-child) .timer-bar {
+    height: 1.4vh;
+    margin-top: 2.5vh;
+    max-width: 90%;
+  }
+
+  .partition:not(:only-child) .partition-middle {
     position: relative;
     flex: 1;
     height: auto;
@@ -470,7 +542,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding: 2vh 0 0 0;
   }
 
-  .partition-controls { 
+  .partition:not(:only-child) .partition-controls {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -479,30 +551,30 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     max-width: 90%;
     margin: 1vh auto 0.5vh auto;
     padding-bottom: 0.5vh;
-    pointer-events: auto; 
-  } 
+    pointer-events: auto;
+  }
 
-  .partition-controls .kid-btn { 
+  .partition:not(:only-child) .partition-controls .kid-btn {
     padding: 1.2vh 2vw;
-    font-size: 1.8vh; 
+    font-size: 1.8vh;
     margin: 0;
     width: 100%;
     text-align: center;
-  } 
+  }
 
-  .partition-controls .btn-finish { order: 1; }
-  .partition-controls .btn-pause { order: 2; }
-  .partition-controls .btn-skip { order: 3; }
-  .partition-controls .btn-exit { order: 4; }
+  .partition:not(:only-child) .btn-finish { order: 1; }
+  .partition:not(:only-child) .btn-pause { order: 2; }
+  .partition:not(:only-child) .btn-skip { order: 3; }
+  .partition:not(:only-child) .btn-exit { order: 4; }
 
-  .partition-controls .kid-name-display { 
+  .partition:not(:only-child) .kid-name-display {
     order: 5;
-    grid-column: span 2; 
+    grid-column: span 2;
     text-align: center;
     font-size: 2.6vh;
     color: #ffffff;
     padding-top: 2vh;
-    padding-bottom: 1.5vh; 
+    padding-bottom: 1.5vh;
     width: 100%;
-  } 
-    }
+  }
+}
