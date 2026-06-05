@@ -325,6 +325,44 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding-bottom: 2.5vh;
   }
 
+  /* Dual-player landscape: Force the insides to copy the portrait 2x2 grid layout */
+  .partition:not(:only-child) .partition-controls {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5vh 2vw; 
+    width: 100%;
+    max-width: 90%;
+    margin: 1vh auto;
+    padding-bottom: 1.5vh;
+    pointer-events: auto;
+  }
+
+  .partition:not(:only-child) .partition-controls .kid-btn {
+    padding: 1.2vh 2vw;
+    font-size: 1.8vh; 
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Grid Ordering & Name Placement for dual landscape */
+  .partition:not(:only-child) .btn-finish { order: 1; }
+  .partition:not(:only-child) .btn-pause { order: 2; }
+  .partition:not(:only-child) .btn-skip { order: 3; }
+  .partition:not(:only-child) .btn-exit { order: 4; }
+
+  .partition:not(:only-child) .kid-name-display {
+    order: 5;
+    grid-column: span 2; 
+    text-align: center;
+    font-size: 2.6vh; 
+    color: #ffffff;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh; 
+    width: 100%;
+  }
+
   /* Single-player landscape execution: corners split, pairs pulled right to the outer margins */
   .partition:only-child .partition-controls {
     display: flex;
@@ -387,6 +425,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     margin: 0; /* Clear margins to let code-driven alignments handle edges */
   }
 }
+
 @media (orientation: portrait) { 
   .split-screen-container { 
     flex-direction: column;
@@ -470,3 +509,4 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     padding-bottom: 1.5vh; 
     width: 100%;
   } 
+    }
