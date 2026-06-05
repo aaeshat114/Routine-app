@@ -385,6 +385,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   .partition:not(:only-child) .partition-middle {
     position: relative;
     height: auto;
+    max-height: 50vh;
     flex: 1;
     top: auto;
     padding: 2vh 0 0 0;
@@ -462,6 +463,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     position: relative;
     flex: 1;
     height: auto;
+    max-height: 45vh;
     width: 100%;
     top: auto;
     left: auto;
@@ -536,6 +538,7 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
     position: relative;
     flex: 1;
     height: auto;
+    max-height: 20vh;
     width: 100%;
     top: auto;
     left: auto;
