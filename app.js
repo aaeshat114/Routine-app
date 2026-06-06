@@ -357,7 +357,6 @@ window.editRoutine = (id) => {
 };
 
 function renderBuilder() {
-  function renderBuilder() {
   document.getElementById('builder-routine-name').value = currentEditingRoutine.name;
   
   let dayTypeSelect = document.getElementById('builder-routine-daytype');
@@ -447,7 +446,6 @@ document.getElementById('btn-save-routine').onclick = async () => {
 // ==========================================
 // 6. Kids Hub & Modal Management
 // ==========================================
-function renderKidsHub() {
 function renderKidsHub() {
   let filterBar = document.getElementById('kids-hub-filter-bar');
   if (!filterBar) {
