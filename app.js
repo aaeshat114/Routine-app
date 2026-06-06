@@ -75,7 +75,33 @@ let bgmType = 'standard';
 let activeSfxCount = 0;
 
 const bgmGainNode = audioCtx.createGain();
-bgmGainNode.connect(audioCtx.destination);
+const musicMuteGain = audioCtx.createGain();
+const sfxMuteGain = audioCtx.createGain();
+
+bgmGainNode.connect(musicMuteGain);
+musicMuteGain.connect(audioCtx.destination);
+sfxMuteGain.connect(audioCtx.destination);
+
+let isMusicMuted = false;
+let isSoundMuted = false;
+
+function toggleMusicMute() {
+  isMusicMuted = !isMusicMuted;
+  musicMuteGain.gain.setValueAtTime(isMusicMuted ? 0 : 1, audioCtx.currentTime);
+  updateAllMuteButtons();
+}
+
+function toggleSoundMute() {
+  isSoundMuted = !isSoundMuted;
+  sfxMuteGain.gain.setValueAtTime(isSoundMuted ? 0 : 1, audioCtx.currentTime);
+  updateAllMuteButtons();
+}
+
+function updateAllMuteButtons() {
+  activeInstances.forEach(instance => {
+    instance.updateMuteButtonsText();
+  });
+}
 
 const AUDIO_PATHS = {
   standard: 'assets/audio/bgm-standard.mp3',
@@ -122,14 +148,13 @@ function playSFX(type, panValue = 0) {
   if (!audioBuffers[type]) return;
   const source = audioCtx.createBufferSource();
   source.buffer = audioBuffers[type];
-  
   if (audioCtx.createStereoPanner) {
     const panner = audioCtx.createStereoPanner();
     panner.pan.value = panValue;
     source.connect(panner);
-    panner.connect(audioCtx.destination);
+    panner.connect(sfxMuteGain);
   } else {
-    source.connect(audioCtx.destination);
+    source.connect(sfxMuteGain);
   }
 
   if (globalBGM) {
@@ -144,12 +169,11 @@ function playSFX(type, panValue = 0) {
         activeSfxCount = 0; 
         const endTime = audioCtx.currentTime;
         bgmGainNode.gain.cancelScheduledValues(endTime);
-        
         const holdDuration = 1.0; 
         const fadeDuration = 0.5; 
 
         bgmGainNode.gain.setValueAtTime(0.2, endTime + holdDuration); 
-        bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + holdDuration + fadeDuration); 
+        bgmGainNode.gain.linearRampToValueAtTime(1.0, endTime + holdDuration + fadeDuration);
       }
     };
   }
@@ -160,13 +184,12 @@ function playSFX(type, panValue = 0) {
 // ==========================================
 // 3. Application State & Navigation
 // ==========================================
-let currentMode = 'kids'; 
+let currentMode = 'kids';
 let activeInstances = []; 
 let profiles = [];
 let routines = [];
 let selectedKidsForRoutine = [];
 let pendingRoutineId = null;
-
 const UI = {
   kidsHub: document.getElementById('view-kids-hub'),
   activeRoutine: document.getElementById('view-active-routine'),
@@ -174,7 +197,6 @@ const UI = {
   routineBuilder: document.getElementById('view-routine-builder'),
   navToggle: document.getElementById('global-nav-toggle')
 };
-
 async function initApp() {
   await initDB();
   await loadAudio();
@@ -195,10 +217,8 @@ async function initApp() {
 function updatePWAThemeColor() {
   const metaTag = document.getElementById('pwa-theme-color');
   if (metaTag) {
-    // Find the currently active view that is not hidden
     const activeEl = Object.values(UI).find(el => el && !el.classList.contains('hidden'));
     if (activeEl) {
-      // Check for a nested partition first, otherwise measure the view container itself
       const partition = activeEl.querySelector('.partition');
       const elementToMeasure = partition || activeEl;
       const computedBg = window.getComputedStyle(elementToMeasure).backgroundColor;
@@ -210,7 +230,6 @@ function updatePWAThemeColor() {
 function switchView(viewName) {
   Object.values(UI).forEach(el => { if (el) el.classList.add('hidden'); });
   let activeEl = null;
-
   if (viewName === 'kidsHub') { 
     UI.kidsHub.classList.remove('hidden'); 
     currentMode = 'kids'; 
@@ -221,7 +240,7 @@ function switchView(viewName) {
   if (viewName === 'parentDash') { 
     UI.parentDash.classList.remove('hidden'); 
     currentMode = 'parent'; 
-    renderParentDash(); 
+    renderParentDash();
     UI.navToggle.style.display = 'block';
     UI.navToggle.className = 'nav-toggle parent-mode';
     activeEl = UI.parentDash;
@@ -248,7 +267,6 @@ UI.navToggle.addEventListener('click', () => {
     switchView('kidsHub');
   }
 });
-
 // ==========================================
 // 4. Parent Gate (Prime Number Logic)
 // ==========================================
@@ -316,7 +334,6 @@ document.getElementById('btn-add-profile').onclick = async () => {
   document.getElementById('new-profile-name').value = '';
   renderParentDash();
 };
-
 window.deleteProfile = async (id) => { await dbDelete('profiles', id); profiles = profiles.filter(p => p.id !== id); renderParentDash(); };
 window.deleteRoutine = async (id) => { 
   window.customConfirm("Delete Routine?", async () => {
@@ -336,7 +353,6 @@ window.editRoutine = (id) => {
   renderBuilder();
   switchView('routineBuilder');
 };
-
 function renderBuilder() {
   document.getElementById('builder-routine-name').value = currentEditingRoutine.name;
   const tList = document.getElementById('builder-task-list');
@@ -396,7 +412,6 @@ window.moveTask = (index, dir) => {
   currentEditingRoutine.tasks[index + dir] = temp;
   renderBuilder();
 };
-
 window.removeTask = (index) => { currentEditingRoutine.tasks.splice(index, 1); renderBuilder(); };
 
 document.getElementById('btn-save-routine').onclick = async () => {
@@ -417,7 +432,7 @@ function renderKidsHub() {
   routines.forEach(r => {
     const card = document.createElement('div');
     card.className = 'routine-card';
-    card.textContent = r.name; // Displays the routine name on the card
+    card.textContent = r.name;
     card.onclick = () => handleRoutineClick(r.id);
     grid.appendChild(card);
   });
@@ -458,7 +473,6 @@ document.getElementById('btn-start-routine').onclick = () => {
     startRoutineExecution();
   }
 };
-
 document.querySelectorAll('.close-modal').forEach(btn => {
   btn.onclick = (e) => e.target.closest('.modal').classList.add('hidden');
 });
@@ -470,8 +484,6 @@ window.customConfirm = (msg, onYes) => {
   document.getElementById('btn-confirm-yes').onclick = () => { modal.classList.add('hidden'); onYes(); };
   document.getElementById('btn-confirm-no').onclick = () => { modal.classList.add('hidden'); };
 };
-
-// Failsafe empty setup if your project structure references this function externally
 function setupEventListeners() {}
 
 // ==========================================
@@ -524,7 +536,7 @@ class RoutineInstance {
     saveSessionState();
   }
 
-    updateUI() {
+  updateUI() {
     const btnFinish = this.container.querySelector('.btn-finish');
     if (this.currentTask.minTime > 0) {
       if (this.elapsed >= this.currentTask.minTime) {
@@ -542,10 +554,9 @@ class RoutineInstance {
     }
   }
 
-  renderTask() {
+ renderTask() {
     if (this.currentTask.img) {
-      this.container.style.backgroundImage = 'none'; 
-      
+      this.container.style.backgroundImage = 'none';
       const palette = ['#9edbf7', '#8e66bc', '#dd3938', '#fae588', '#1d4177', '#de8a45', '#c3e8b2', '#60bba9'];
       const img = new Image();
       img.src = this.currentTask.img;
@@ -574,24 +585,24 @@ class RoutineInstance {
       requestAnimationFrame(updatePWAThemeColor);
     }
 
-            this.container.innerHTML = `
+    this.container.innerHTML = `
       <div class="partition-top">
         <div class="header-bar">${this.currentTask.name}</div>
-        ${this.currentTask.maxTime > 0 ?
-`<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
+        ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
       </div>
       <div class="partition-body-combined">
+        <div class="mute-controls hidden" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px; pointer-events: auto;">
+          <button class="kid-btn btn-mute-music" style="font-size: 14px; padding: 8px 16px; margin: 0; min-width: auto; box-shadow: 0 4px 0 #0a4b80;"></button>
+          <button class="kid-btn btn-mute-sounds" style="font-size: 14px; padding: 8px 16px; margin: 0; min-width: auto; box-shadow: 0 4px 0 #0a4b80;"></button>
+        </div>
         <div class="partition-middle">
-          ${this.currentTask.img ?
-`<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
+          ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
         </div>
         <div class="partition-controls">
-          <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ?
-'style="visibility: hidden;"' : ''}>Finish</button>
+          <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="visibility: hidden;"' : ''}>Finish</button>
           <button class="kid-btn btn-pause">Pause</button>
           <div class="kid-name-display">${this.profile.name}</div>
-          <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ?
-'disabled' : ''}>Skip</button>
+          <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ? 'disabled' : ''}>Skip</button>
           <button class="kid-btn btn-exit">Exit</button>
         </div>
       </div>
@@ -617,13 +628,24 @@ class RoutineInstance {
     this.container.querySelector('.btn-pause').onclick = (e) => {
       this.isPaused = !this.isPaused;
       e.target.textContent = this.isPaused ? 'Resume' : 'Pause';
+      this.updateMuteControlsVisibility();
       evaluateGlobalAudio(); 
     };
 
     this.container.querySelector('.btn-exit').onclick = () => {
       window.customConfirm("Exit Routine?", () => this.destroy());
     };
-}
+
+    this.container.querySelector('.btn-mute-music').onclick = () => {
+      toggleMusicMute();
+    };
+
+    this.container.querySelector('.btn-mute-sounds').onclick = () => {
+      toggleSoundMute();
+    };
+
+    this.updateMuteControlsVisibility();
+  }
 
   completeRoutine() {
     playSFX('victory', this.panSide);
@@ -643,6 +665,25 @@ class RoutineInstance {
     evaluateGlobalAudio();
     saveSessionState();
     if (activeInstances.length === 0) { stopBGM(); renderKidsHub(); }
+  }
+
+  updateMuteControlsVisibility() {
+    const muteControls = this.container.querySelector('.mute-controls');
+    if (muteControls) {
+      if (this.isPaused) {
+        muteControls.classList.remove('hidden');
+        this.updateMuteButtonsText();
+      } else {
+        muteControls.classList.add('hidden');
+      }
+    }
+  }
+
+  updateMuteButtonsText() {
+    const btnMusic = this.container.querySelector('.btn-mute-music');
+    const btnSounds = this.container.querySelector('.btn-mute-sounds');
+    if (btnMusic) btnMusic.textContent = isMusicMuted ? 'Unmute Music' : 'Mute Music';
+    if (btnSounds) btnSounds.textContent = isSoundMuted ? 'Unmute Sounds' : 'Mute Sounds';
   }
 }
 
@@ -668,7 +709,6 @@ function evaluateGlobalAudio() {
   if (activeInstances.length === 0) { stopBGM(); return; }
   
   const allPaused = activeInstances.every(i => i.isPaused);
-  
   if (allPaused) {
     if (audioCtx.state === 'running') audioCtx.suspend();
     return;
@@ -694,7 +734,8 @@ async function saveSessionState() {
     queue: i.queue,
     currentTask: i.currentTask,
     elapsed: i.elapsed,
-    panSide: i.panSide
+    panSide: i.panSide,
+    isPaused: i.isPaused
   }));
   await dbPut('state', { id: 'current', instances: stateData });
 }
@@ -716,6 +757,7 @@ document.getElementById('btn-resume-session').onclick = () => {
     instance.queue = st.queue;
     instance.currentTask = st.currentTask;
     instance.elapsed = st.elapsed;
+    instance.isPaused = st.isPaused || false;
     instance.renderTask();
     activeInstances.push(instance);
     container.appendChild(instance.container);
