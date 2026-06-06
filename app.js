@@ -692,6 +692,7 @@ class RoutineInstance {
     if (btnMusic) btnMusic.innerHTML = isMusicMuted ? musicOffSvg : musicOnSvg;
     if (btnSounds) btnSounds.innerHTML = isSoundMuted ? soundsOffSvg : soundsOnSvg;
   }
+}
 
 function startRoutineExecution() {
   const rData = routines.find(r => r.id === pendingRoutineId);
