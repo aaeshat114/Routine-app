@@ -49,17 +49,23 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 }
 .nav-toggle.parent-mode::after { content: ""; }
 
-#global-nav-toggle .icon {
-  display: none;
+.nav-toggle .nav-icon {
   width: 100%;
   height: 100%;
 }
-#global-nav-toggle.kids-mode .icon.kids {
+
+.nav-toggle .nav-icon path {
+  display: none;
+}
+
+.nav-toggle.kids-mode .path-kids {
   display: block;
 }
-#global-nav-toggle.parent-mode .icon.parent {
+
+.nav-toggle.parent-mode .path-parent {
   display: block;
 }
+
 
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
 .panel { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
