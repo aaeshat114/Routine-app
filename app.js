@@ -679,13 +679,19 @@ class RoutineInstance {
     }
   }
 
-  updateMuteButtonsText() {
+    updateMuteButtonsText() {
     const btnMusic = this.container.querySelector('.btn-mute-music');
     const btnSounds = this.container.querySelector('.btn-mute-sounds');
-    if (btnMusic) btnMusic.textContent = isMusicMuted ? '🎶' : '🔇';
-    if (btnSounds) btnSounds.textContent = isSoundMuted ? '🔊' : '🔈';
+    
+    const musicOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
+    const musicOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
+    
+    const soundsOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
+    const soundsOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
+
+    if (btnMusic) btnMusic.innerHTML = isMusicMuted ? musicOffSvg : musicOnSvg;
+    if (btnSounds) btnSounds.innerHTML = isSoundMuted ? soundsOffSvg : soundsOnSvg;
   }
-}
 
 function startRoutineExecution() {
   const rData = routines.find(r => r.id === pendingRoutineId);
