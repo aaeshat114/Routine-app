@@ -4,13 +4,26 @@
 const DB_NAME = 'KidsRoutineDB';
 const DB_VERSION = 1;
 const PRELOADED_IMAGES = [
-  './assets/images/task1.png', './assets/images/task2.png', './assets/images/task3.png',
-  './assets/images/task4.png', './assets/images/task5.png', './assets/images/task6.png',
-  './assets/images/task7.png', './assets/images/task8.png', './assets/images/task9.png',
-  './assets/images/task10.png', './assets/images/task11.png', './assets/images/task12.png',
-  './assets/images/task13.png', './assets/images/task14.png', './assets/images/task15.png',
-  './assets/images/task16.png', './assets/images/task17.png', './assets/images/task18.png',
-  './assets/images/task19.png', './assets/images/task20.png',
+  './assets/images/task1.png',
+  './assets/images/task2.png',
+  './assets/images/task3.png',
+  './assets/images/task4.png',
+  './assets/images/task5.png',
+  './assets/images/task6.png',
+  './assets/images/task7.png',
+  './assets/images/task8.png',
+  './assets/images/task9.png',
+  './assets/images/task10.png',
+  './assets/images/task11.png',
+  './assets/images/task12.png',
+  './assets/images/task13.png',
+  './assets/images/task14.png',
+  './assets/images/task15.png',
+  './assets/images/task16.png',
+  './assets/images/task17.png',
+  './assets/images/task18.png',
+  './assets/images/task19.png',
+  './assets/images/task20.png',
 ];
 let currentTaskImageIndex = null;
 let db;
@@ -64,6 +77,7 @@ let activeSfxCount = 0;
 const bgmGainNode = audioCtx.createGain();
 const musicMuteGain = audioCtx.createGain();
 const sfxMuteGain = audioCtx.createGain();
+
 bgmGainNode.connect(musicMuteGain);
 musicMuteGain.connect(audioCtx.destination);
 sfxMuteGain.connect(audioCtx.destination);
@@ -184,7 +198,6 @@ const UI = {
   routineBuilder: document.getElementById('view-routine-builder'),
   navToggle: document.getElementById('global-nav-toggle')
 };
-
 async function initApp() {
   await initDB();
   await loadAudio();
@@ -221,26 +234,26 @@ function switchView(viewName) {
   if (viewName === 'kidsHub') { 
     UI.kidsHub.classList.remove('hidden'); 
     currentMode = 'kids'; 
-    UI.navToggle.classList.remove('hidden');
+    UI.navToggle.style.display = 'block'; 
     UI.navToggle.className = 'nav-toggle kids-mode';
     activeEl = UI.kidsHub;
   }
   if (viewName === 'parentDash') { 
-    UI.parentDash.classList.remove('hidden');
+    UI.parentDash.classList.remove('hidden'); 
     currentMode = 'parent'; 
     renderParentDash();
-    UI.navToggle.classList.remove('hidden');
+    UI.navToggle.style.display = 'block';
     UI.navToggle.className = 'nav-toggle parent-mode';
     activeEl = UI.parentDash;
   }
   if (viewName === 'activeRoutine') { 
     UI.activeRoutine.classList.remove('hidden'); 
-    UI.navToggle.classList.add('hidden');
+    UI.navToggle.style.display = 'none';
     activeEl = UI.activeRoutine;
   }
   if (viewName === 'routineBuilder') { 
     UI.routineBuilder.classList.remove('hidden'); 
-    UI.navToggle.classList.add('hidden');
+    UI.navToggle.style.display = 'none';
     activeEl = UI.routineBuilder;
   }
   
@@ -255,7 +268,6 @@ UI.navToggle.addEventListener('click', () => {
     switchView('kidsHub');
   }
 });
-
 // ==========================================
 // 4. Parent Gate (Prime Number Logic)
 // ==========================================
@@ -351,7 +363,8 @@ function renderBuilder() {
   if (!dayTypeSelect) {
     dayTypeSelect = document.createElement('select');
     dayTypeSelect.id = 'builder-routine-daytype';
-    dayTypeSelect.className = 'builder-daytype-select';
+    dayTypeSelect.style.margin = '10px 0';
+    dayTypeSelect.style.display = 'block';
     dayTypeSelect.onchange = (e) => { currentEditingRoutine.dayType = e.target.value; };
     const nameInput = document.getElementById('builder-routine-name');
     nameInput.parentNode.insertBefore(dayTypeSelect, nameInput.nextSibling);
@@ -360,6 +373,7 @@ function renderBuilder() {
     <option value="school" ${currentEditingRoutine.dayType === 'school' ? 'selected' : ''}>School Day</option>
     <option value="free" ${currentEditingRoutine.dayType === 'free' ? 'selected' : ''}>Weekend / Holiday</option>
   `;
+
   const tList = document.getElementById('builder-task-list');
   tList.innerHTML = '';
   currentEditingRoutine.tasks.forEach((t, i) => {
@@ -375,7 +389,7 @@ function renderBuilder() {
         <option value="skip" ${t.skipBehavior === 'skip' ? 'selected' : ''}>Skip Completely</option>
         <option value="defer" ${t.skipBehavior === 'defer' ? 'selected' : ''}>Skip & Defer</option>
       </select>
-      <div class="task-img-container">
+      <div style="margin: 10px 0;">
         <button class="btn-choose-img" onclick="openImagePicker(${i})">Choose Image</button>
         <span class="task-img-label">${imgName}</span>
       </div>
@@ -437,15 +451,19 @@ function renderKidsHub() {
   if (!filterBar) {
     filterBar = document.createElement('div');
     filterBar.id = 'kids-hub-filter-bar';
-    filterBar.className = 'hub-filter-bar';
+    filterBar.style.display = 'flex';
+    filterBar.style.justifyContent = 'center';
+    filterBar.style.gap = '15px';
+    filterBar.style.marginBottom = '20px';
     const grid = document.getElementById('kids-routine-grid');
     grid.parentNode.insertBefore(filterBar, grid);
   }
   
   filterBar.innerHTML = `
-    <button class="kid-btn filter-btn ${currentDayTypeFilter === 'school' ? '' : 'tilted inactive'}" onclick="setKidsHubFilter('school')">School Day</button>
-    <button class="kid-btn filter-btn ${currentDayTypeFilter === 'free' ? '' : 'tilted inactive'}" onclick="setKidsHubFilter('free')">Weekend / Holiday</button>
+    <button class="kid-btn ${currentDayTypeFilter === 'school' ? '' : 'tilted'}" style="margin:0; opacity: ${currentDayTypeFilter === 'school' ? '1' : '0.6'}" onclick="setKidsHubFilter('school')">School Day</button>
+    <button class="kid-btn ${currentDayTypeFilter === 'free' ? '' : 'tilted'}" style="margin:0; opacity: ${currentDayTypeFilter === 'free' ? '1' : '0.6'}" onclick="setKidsHubFilter('free')">Weekend / Holiday</button>
   `;
+
   const grid = document.getElementById('kids-routine-grid');
   grid.innerHTML = '';
   
@@ -478,15 +496,15 @@ function handleRoutineClick(rId) {
     list.innerHTML = '';
     profiles.forEach(p => {
       const btn = document.createElement('button');
-      btn.className = 'kid-btn participant-btn unselected';
+      btn.className = 'kid-btn';
       btn.textContent = p.name;
       btn.onclick = () => {
         if (selectedKidsForRoutine.includes(p)) {
           selectedKidsForRoutine = selectedKidsForRoutine.filter(k => k !== p);
-          btn.classList.add('unselected');
+          btn.style.opacity = '0.5';
         } else if (selectedKidsForRoutine.length < 2) {
           selectedKidsForRoutine.push(p);
-          btn.classList.remove('unselected');
+          btn.style.opacity = '1';
         }
       };
       list.appendChild(btn);
@@ -568,9 +586,9 @@ class RoutineInstance {
     const btnFinish = this.container.querySelector('.btn-finish');
     if (this.currentTask.minTime > 0) {
       if (this.elapsed >= this.currentTask.minTime) {
-        if(btnFinish) btnFinish.classList.remove('v-hidden');
+        if(btnFinish) btnFinish.style.visibility = 'visible';
       } else {
-        if(btnFinish) btnFinish.classList.add('v-hidden');
+        if(btnFinish) btnFinish.style.visibility = 'hidden';
       }
     }
     
@@ -578,7 +596,7 @@ class RoutineInstance {
     if (fill && this.currentTask.maxTime > 0) {
       const pct = Math.min((this.elapsed / this.currentTask.maxTime) * 100, 100);
       fill.style.width = `${pct}%`;
-      if (pct > 90) fill.classList.add('critical');
+      if (pct > 90) fill.style.background = '#ff1744';
     }
   }
 
@@ -616,20 +634,18 @@ class RoutineInstance {
     this.container.innerHTML = `
       <div class="partition-top">
         <div class="header-bar">${this.currentTask.name}</div>
-        ${this.currentTask.maxTime > 0 ?
-        `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
+        ${this.currentTask.maxTime > 0 ? `<div class="timer-bar"><div class="timer-fill" style="width:0%"></div></div>` : ''}
       </div>
       <div class="partition-body-combined">
-        <div class="mute-controls mute-controls-wrapper hidden">
-          <button class="kid-btn mute-btn btn-mute-music"></button>
-          <button class="kid-btn mute-btn btn-mute-sounds"></button>
+        <div class="mute-controls hidden" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px; pointer-events: auto;">
+          <button class="kid-btn btn-mute-music" style="font-size: 14px; padding: 8px 16px; margin: 0; min-width: auto; box-shadow: 0 4px 0 #0a4b80;"></button>
+          <button class="kid-btn btn-mute-sounds" style="font-size: 14px; padding: 8px 16px; margin: 0; min-width: auto; box-shadow: 0 4px 0 #0a4b80;"></button>
         </div>
         <div class="partition-middle">
-          ${this.currentTask.img ?
-          `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
+          ${this.currentTask.img ? `<img src="${this.currentTask.img}" class="task-display-image" alt="Task Graphic">` : ''}
         </div>
         <div class="partition-controls">
-          <button class="kid-btn btn-finish ${this.currentTask.minTime > 0 ? 'v-hidden' : ''}">Finish</button>
+          <button class="kid-btn btn-finish" ${this.currentTask.minTime > 0 ? 'style="visibility: hidden;"' : ''}>Finish</button>
           <button class="kid-btn btn-pause">Pause</button>
           <div class="kid-name-display">${this.profile.name}</div>
           <button class="kid-btn tilted btn-skip" ${this.currentTask.skipBehavior === 'none' ? 'disabled' : ''}>Skip</button>
@@ -637,8 +653,11 @@ class RoutineInstance {
         </div>
       </div>
     `;
+
     this.container.querySelector('.btn-finish').onclick = () => {
-      if (this.queue.length > 0) { playSFX('complete', this.panSide); }
+      if (this.queue.length > 0) {
+        playSFX('complete', this.panSide);
+      }
       this.advanceTask();
     };
 
@@ -658,12 +677,15 @@ class RoutineInstance {
       this.updateMuteControlsVisibility();
       evaluateGlobalAudio(); 
     };
+
     this.container.querySelector('.btn-exit').onclick = () => {
       window.customConfirm("Exit Routine?", () => this.destroy());
     };
+
     this.container.querySelector('.btn-mute-music').onclick = () => {
       toggleMusicMute();
     };
+
     this.container.querySelector('.btn-mute-sounds').onclick = () => {
       toggleSoundMute();
     };
@@ -703,15 +725,16 @@ class RoutineInstance {
     }
   }
 
-  updateMuteButtonsText() {
+    updateMuteButtonsText() {
     const btnMusic = this.container.querySelector('.btn-mute-music');
     const btnSounds = this.container.querySelector('.btn-mute-sounds');
     
-    const musicOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
-    const musicOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
-    const soundsOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
-    const soundsOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="svg-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
+    const musicOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
+    const musicOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
     
+    const soundsOnSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
+    const soundsOffSvg = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><line x1="3" y1="21" x2="21" y2="3" stroke-width="3"></line></svg>`;
+
     if (btnMusic) btnMusic.innerHTML = isMusicMuted ? musicOffSvg : musicOnSvg;
     if (btnSounds) btnSounds.innerHTML = isSoundMuted ? soundsOffSvg : soundsOnSvg;
   }
