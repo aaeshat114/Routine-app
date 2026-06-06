@@ -185,7 +185,8 @@ function playSFX(type, panValue = 0) {
 // 3. Application State & Navigation
 // ==========================================
 let currentMode = 'kids';
-let activeInstances = []; 
+let activeInstances = [];
+let currentDayTypeFilter = 'school';
 let profiles = [];
 let routines = [];
 let selectedKidsForRoutine = [];
@@ -343,18 +344,37 @@ window.deleteRoutine = async (id) => {
 
 let currentEditingRoutine = null;
 document.getElementById('btn-new-routine').onclick = () => {
-  currentEditingRoutine = { id: Date.now().toString(), name: '', tasks: [] };
+  currentEditingRoutine = { id: Date.now().toString(), name: '', dayType: 'school', tasks: [] };
   renderBuilder();
   switchView('routineBuilder');
 };
 
 window.editRoutine = (id) => {
   currentEditingRoutine = JSON.parse(JSON.stringify(routines.find(r => r.id === id)));
+  if (!currentEditingRoutine.dayType) currentEditingRoutine.dayType = 'school';
   renderBuilder();
   switchView('routineBuilder');
 };
+
 function renderBuilder() {
+  function renderBuilder() {
   document.getElementById('builder-routine-name').value = currentEditingRoutine.name;
+  
+  let dayTypeSelect = document.getElementById('builder-routine-daytype');
+  if (!dayTypeSelect) {
+    dayTypeSelect = document.createElement('select');
+    dayTypeSelect.id = 'builder-routine-daytype';
+    dayTypeSelect.style.margin = '10px 0';
+    dayTypeSelect.style.display = 'block';
+    dayTypeSelect.onchange = (e) => { currentEditingRoutine.dayType = e.target.value; };
+    const nameInput = document.getElementById('builder-routine-name');
+    nameInput.parentNode.insertBefore(dayTypeSelect, nameInput.nextSibling);
+  }
+  dayTypeSelect.innerHTML = `
+    <option value="school" ${currentEditingRoutine.dayType === 'school' ? 'selected' : ''}>School Day</option>
+    <option value="free" ${currentEditingRoutine.dayType === 'free' ? 'selected' : ''}>Weekend / Holiday</option>
+  `;
+
   const tList = document.getElementById('builder-task-list');
   tList.innerHTML = '';
   currentEditingRoutine.tasks.forEach((t, i) => {
@@ -416,6 +436,7 @@ window.removeTask = (index) => { currentEditingRoutine.tasks.splice(index, 1); r
 
 document.getElementById('btn-save-routine').onclick = async () => {
   currentEditingRoutine.name = document.getElementById('builder-routine-name').value || 'Unnamed Routine';
+  currentEditingRoutine.dayType = document.getElementById('builder-routine-daytype')?.value || 'school';
   await dbPut('routines', currentEditingRoutine);
   const existingIdx = routines.findIndex(r => r.id === currentEditingRoutine.id);
   if (existingIdx >= 0) routines[existingIdx] = currentEditingRoutine;
@@ -427,9 +448,31 @@ document.getElementById('btn-save-routine').onclick = async () => {
 // 6. Kids Hub & Modal Management
 // ==========================================
 function renderKidsHub() {
+function renderKidsHub() {
+  let filterBar = document.getElementById('kids-hub-filter-bar');
+  if (!filterBar) {
+    filterBar = document.createElement('div');
+    filterBar.id = 'kids-hub-filter-bar';
+    filterBar.style.display = 'flex';
+    filterBar.style.justifyContent = 'center';
+    filterBar.style.gap = '15px';
+    filterBar.style.marginBottom = '20px';
+    const grid = document.getElementById('kids-routine-grid');
+    grid.parentNode.insertBefore(filterBar, grid);
+  }
+  
+  filterBar.innerHTML = `
+    <button class="kid-btn ${currentDayTypeFilter === 'school' ? '' : 'tilted'}" style="margin:0; opacity: ${currentDayTypeFilter === 'school' ? '1' : '0.6'}" onclick="setKidsHubFilter('school')">School Day</button>
+    <button class="kid-btn ${currentDayTypeFilter === 'free' ? '' : 'tilted'}" style="margin:0; opacity: ${currentDayTypeFilter === 'free' ? '1' : '0.6'}" onclick="setKidsHubFilter('free')">Weekend / Holiday</button>
+  `;
+
   const grid = document.getElementById('kids-routine-grid');
   grid.innerHTML = '';
+  
   routines.forEach(r => {
+    const dayType = r.dayType || 'school';
+    if (dayType !== currentDayTypeFilter) return;
+
     const card = document.createElement('div');
     card.className = 'routine-card';
     card.textContent = r.name;
@@ -438,6 +481,11 @@ function renderKidsHub() {
   });
   switchView('kidsHub');
 }
+
+window.setKidsHubFilter = (filter) => {
+  currentDayTypeFilter = filter;
+  renderKidsHub();
+};
 
 function handleRoutineClick(rId) {
   pendingRoutineId = rId;
