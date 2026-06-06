@@ -682,8 +682,8 @@ class RoutineInstance {
   updateMuteButtonsText() {
     const btnMusic = this.container.querySelector('.btn-mute-music');
     const btnSounds = this.container.querySelector('.btn-mute-sounds');
-    if (btnMusic) btnMusic.textContent = isMusicMuted ? 'Unmute Music' : 'Mute Music';
-    if (btnSounds) btnSounds.textContent = isSoundMuted ? 'Unmute Sounds' : 'Mute Sounds';
+    if (btnMusic) btnMusic.textContent = isMusicMuted ? '🎶' : '🔇';
+    if (btnSounds) btnSounds.textContent = isSoundMuted ? '🔊' : '🔈';
   }
 }
 
