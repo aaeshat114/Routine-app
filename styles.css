@@ -66,6 +66,23 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   display: block;
 }
 
+#view-kids-hub {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Stops the entire view from scrolling */
+  padding-bottom: 0; /* Allows the scrollable grid to reach the bottom edge */
+}
+#view-kids-hub h1,
+#kids-hub-filter-bar {
+  flex-shrink: 0; 
+}
+#kids-routine-grid {
+  flex: 1;
+  overflow-y: auto;
+  align-content: start; /* Prevents routine cards from stretching vertically to fill space */
+  padding-bottom: 40px; /* Adds breathing room at the bottom of the scroll list */
+}
+
 
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
 .panel { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
