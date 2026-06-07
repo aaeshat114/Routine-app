@@ -24,6 +24,10 @@ const PRELOADED_IMAGES = [
   './assets/images/task18.png',
   './assets/images/task19.png',
   './assets/images/task20.png',
+  './assets/images/task21.png',
+  './assets/images/task22.png',
+  './assets/images/task23.png',
+  './assets/images/task24.png',
 ];
 let currentTaskImageIndex = null;
 let db;
