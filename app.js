@@ -207,6 +207,10 @@ async function initApp() {
   await loadAudio();
   profiles = await dbGetAll('profiles');
   routines = await dbGetAll('routines');
+  routines.sort((a, b) => {
+    if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+    return a.id.localeCompare(b.id);
+  });
   const session = await dbGetAll('state');
   if (session.length > 0 && session[0].instances.length > 0) {
     document.getElementById('modal-recovery').classList.remove('hidden');
