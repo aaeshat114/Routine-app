@@ -323,13 +323,15 @@ async function renderParentDash() {
     div.innerHTML = `${p.name} <button onclick="deleteProfile('${p.id}')">Del</button>`;
     pList.appendChild(div);
   });
-  const rList = document.getElementById('parent-routine-list');
+    const rList = document.getElementById('parent-routine-list');
   rList.innerHTML = '';
-  routines.forEach(r => {
+  routines.forEach((r, i) => {
     const div = document.createElement('div');
     div.innerHTML = `${r.name} 
+      <button onclick="moveRoutine(${i}, -1)">▲</button>
+      <button onclick="moveRoutine(${i}, 1)">▼</button>
       <button onclick="editRoutine('${r.id}')">Edit</button> 
-      <button onclick="duplicateRoutine('${r.id}')">Copy</button>
+      <button onclick="duplicateRoutine('${r.id}')">Copy</button> 
       <button onclick="deleteRoutine('${r.id}')">Del</button>`;
     rList.appendChild(div);
   });
