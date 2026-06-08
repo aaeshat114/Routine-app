@@ -352,6 +352,31 @@ window.deleteRoutine = async (id) => {
     await dbDelete('routines', id); routines = routines.filter(r => r.id !== id); renderParentDash(); 
   });
 };
+window.duplicateRoutine = async (id) => {
+  const original = routines.find(r => r.id === id);
+  if (!original) return;
+  const clone = JSON.parse(JSON.stringify(original));
+  clone.id = Date.now().toString();
+  clone.name = `${original.name} (Copy)`;
+  clone.order = routines.length;
+  await dbPut('routines', clone);
+  routines.push(clone);
+  renderParentDash();
+};
+
+window.moveRoutine = async (index, dir) => {
+  if (index + dir < 0 || index + dir >= routines.length) return;
+  const temp = routines[index];
+  routines[index] = routines[index + dir];
+  routines[index + dir] = temp;
+  routines.forEach((r, idx) => {
+    r.order = idx;
+  });
+  await dbPut('routines', routines[index]);
+  await dbPut('routines', routines[index + dir]);
+  renderParentDash();
+};
+
 
 let currentEditingRoutine = null;
 document.getElementById('btn-new-routine').onclick = () => {
