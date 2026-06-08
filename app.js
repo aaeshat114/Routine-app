@@ -468,20 +468,6 @@ window.moveTask = (index, dir) => {
   renderBuilder();
 };
 window.removeTask = (index) => { currentEditingRoutine.tasks.splice(index, 1); renderBuilder(); };
-window.duplicateRoutine = async (id) => {
-  const original = routines.find(r => r.id === id);
-  if (!original) return;
-
-  const clone = JSON.parse(JSON.stringify(original));
-  
-  clone.id = Date.now().toString();
-  clone.name = `${original.name} (Copy)`;
-
-  await dbPut('routines', clone);
-  
-  routines.push(clone);
-  renderParentDash();
-};
 
 document.getElementById('btn-save-routine').onclick = async () => {
   currentEditingRoutine.name = document.getElementById('builder-routine-name').value || 'Unnamed Routine';
