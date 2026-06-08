@@ -458,15 +458,19 @@ window.duplicateRoutine = async (id) => {
   renderParentDash();
 };
 
-
-
 document.getElementById('btn-save-routine').onclick = async () => {
   currentEditingRoutine.name = document.getElementById('builder-routine-name').value || 'Unnamed Routine';
   currentEditingRoutine.dayType = document.getElementById('builder-routine-daytype')?.value || 'school';
-  await dbPut('routines', currentEditingRoutine);
+  
   const existingIdx = routines.findIndex(r => r.id === currentEditingRoutine.id);
-  if (existingIdx >= 0) routines[existingIdx] = currentEditingRoutine;
-  else routines.push(currentEditingRoutine);
+  if (existingIdx >= 0) {
+    currentEditingRoutine.order = routines[existingIdx].order ?? existingIdx;
+    routines[existingIdx] = currentEditingRoutine;
+  } else {
+    currentEditingRoutine.order = routines.length;
+    routines.push(currentEditingRoutine);
+  }
+  await dbPut('routines', currentEditingRoutine);
   switchView('parentDash');
 };
 
