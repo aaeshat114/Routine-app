@@ -327,9 +327,12 @@ async function renderParentDash() {
   rList.innerHTML = '';
   routines.forEach((r, i) => {
     const div = document.createElement('div');
-    div.innerHTML = `${r.name} 
-      <button class="move-btn" onclick="moveRoutine(${i}, -1)">▲</button>
-      <button class="move-btn" onclick="moveRoutine(${i}, 1)">▼</button>
+    div.innerHTML =
+      <span class="arrow-group">
+        <button class="move-btn" onclick="moveRoutine(${i}, -1)">▲</button>
+        <button class="move-btn" onclick="moveRoutine(${i}, 1)">▼</button>
+      </span>
+      `${r.name} 
       <button onclick="editRoutine('${r.id}')">Edit</button> 
       <button onclick="duplicateRoutine('${r.id}')">Copy</button> 
       <button onclick="deleteRoutine('${r.id}')">Del</button>`;
