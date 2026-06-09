@@ -328,8 +328,8 @@ async function renderParentDash() {
   routines.forEach((r, i) => {
     const div = document.createElement('div');
     div.innerHTML = `${r.name} 
-      <button onclick="moveRoutine(${i}, -1)">▲</button>
-      <button onclick="moveRoutine(${i}, 1)">▼</button>
+      <button class="move-btn" onclick="moveRoutine(${i}, -1)">▲</button>
+      <button class="move-btn" onclick="moveRoutine(${i}, 1)">▼</button>
       <button onclick="editRoutine('${r.id}')">Edit</button> 
       <button onclick="duplicateRoutine('${r.id}')">Copy</button> 
       <button onclick="deleteRoutine('${r.id}')">Del</button>`;
