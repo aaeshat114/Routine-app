@@ -89,8 +89,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 #view-kids-hub {
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Stops the entire view from scrolling */
-  padding-bottom: 0; /* Allows the scrollable grid to reach the bottom edge */
+  overflow: hidden; 
+  padding-bottom: 0; 
 }
 #view-kids-hub h1,
 #kids-hub-filter-bar {
@@ -99,8 +99,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 #kids-routine-grid {
   flex: 1;
   overflow-y: auto;
-  align-content: start; /* Prevents routine cards from stretching vertically to fill space */
-  padding-bottom: 40px; /* Adds breathing room at the bottom of the scroll list */
+  align-content: start;
+  padding-bottom: 40px; 
 }
 
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
@@ -113,8 +113,9 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .parent-theme button.primary { background: var(--text-parent); color: white; box-shadow: 0 3px 0 rgba(10, 22, 44, 0.6); }
 #parent-routine-list > div { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 12px 0; border-bottom: 2px solid #dce4f0; }
 #parent-routine-list > div:last-child { border-bottom: none; }
-.parent-theme button.move-btn { background: transparent; box-shadow: none; padding: 4px 0px; margin: 0; font-size: 18px; color: var(--text-parent); }
-.parent-theme button.move-btn:active { transform: scale(0.85); box-shadow: none;}
+.arrow-group { display: inline-flex; gap: 0px; }
+.parent-theme button.move-btn { background: transparent; box-shadow: none; padding: 4px 2px; margin: 0; font-size: 18px; color: var(--text-parent); }
+.parent-theme button.move-btn:active { transform: scale(0.85); box-shadow: none; }
 
 .kids-theme { background: var(--bg-kids); color: var(--text-kids); font-family: var(--font-kids); text-align: center; }
 
