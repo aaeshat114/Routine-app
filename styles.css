@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;700&display=swap');
 
 :root {
-  --bg-parent: #b4c3dd;
-  --text-parent: #333;
+  --bg-parent: #7e9ed5;
+  --text-parent: #142d58;
   --bg-kids: #b4c3dd;
   --text-kids: #142d58;
   --card-kids: #7e9ed5;
@@ -103,12 +103,14 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
   padding-bottom: 40px; /* Adds breathing room at the bottom of the scroll list */
 }
 
-
 .parent-theme { background: var(--bg-parent); color: var(--text-parent); font-family: var(--font-parent); }
-.panel { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.parent-theme input, .parent-theme button { padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; }
-.parent-theme button { background: #e0e0e0; cursor: pointer; }
-.parent-theme button.primary { background: #2196f3; color: white; border: none; }
+.parent-theme h1 { margin-top: 15px; margin-bottom: 25px; font-weight: 700; }
+.panel { background: #fff; padding: 20px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 8px 16px rgba(20, 45, 88, 0.08); }
+.parent-theme input, .parent-theme select { padding: 12px; margin: 5px 4px; border: 2px solid #e2eaf5; border-radius: 10px; font-family: var(--font-parent); color: var(--text-parent); outline: none; transition: border-color 0.2s; }
+.parent-theme input:focus, .parent-theme select:focus { border-color: var(--kid-btn); }
+.parent-theme button { padding: 12px 20px; margin: 5px 4px; background: #ffffff; color: var(--text-parent); cursor: pointer; font-family: var(--font-parent); font-weight: 700; font-size: 16px; border: none; border-radius: 10px; box-shadow: 0 4px 0 rgba(20, 45, 88, 0.08); transition: transform 0.1s, box-shadow 0.1s; }
+.parent-theme button:active { transform: translateY(4px); box-shadow: none; }
+.parent-theme button.primary { background: var(--text-parent); color: white; box-shadow: 0 4px 0 rgba(10, 22, 44, 0.6); }
 
 .kids-theme { background: var(--bg-kids); color: var(--text-kids); font-family: var(--font-kids); text-align: center; }
 
