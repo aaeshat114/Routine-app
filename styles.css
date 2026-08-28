@@ -118,6 +118,24 @@ body, html { width: 100%; height: 100%; overflow: hidden; }
 .parent-theme button.move-btn { background: transparent; box-shadow: none; padding: 4px 2px; margin: 0; font-size: 18px; color: var(--text-parent); }
 .parent-theme button.move-btn:active { transform: scale(0.85); box-shadow: none; }
 
+#data-transfer-text {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #e2eaf5;
+  font-family: monospace;
+  font-size: 12px;
+  resize: vertical;
+  color: var(--text-parent);
+  background-color: #f8fafc;
+}
+
+#data-transfer-text:focus {
+  outline: none;
+  border-color: var(--kid-btn);
+}
+
 .kids-theme { background: var(--bg-kids); color: var(--text-kids); font-family: var(--font-kids); text-align: center; }
 
 #view-kids-hub h1 {
