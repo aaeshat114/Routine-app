@@ -38,6 +38,11 @@
       <div id="parent-routine-list"></div>
       <button id="btn-new-routine">Create New Routine</button>
     </div>
+        <div class="panel">
+      <h2>Data Management</h2>
+      <button id="btn-export-data">Export Data</button>
+      <button id="btn-import-data">Import Data</button>
+        </div>
   </div>
 
   <div id="view-routine-builder" class="view parent-theme hidden">
@@ -88,6 +93,16 @@
       <button class="close-modal">X</button>
       <h2>Select Task Image</h2>
       <div id="image-picker-grid" class="grid-container"></div>
+    </div>
+    </div>
+
+    <div id="modal-data-transfer" class="modal hidden">
+    <div class="modal-content parent-theme">
+      <button class="close-modal">X</button>
+      <h2 id="data-transfer-title">Data Management</h2>
+      <p id="data-transfer-desc">Manage your routine and profile data.</p>
+      <textarea id="data-transfer-text"></textarea>
+      <button id="btn-data-action" class="primary">Action</button>
     </div>
     </div>
 
