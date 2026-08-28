@@ -487,6 +487,84 @@ document.getElementById('btn-save-routine').onclick = async () => {
   switchView('parentDash');
 };
 
+// --- Data Export ---
+document.getElementById('btn-export-data').onclick = () => {
+  // Package both arrays into one object
+  const dataToExport = {
+    profiles: profiles,
+    routines: routines
+  };
+  const jsonString = JSON.stringify(dataToExport);
+
+  document.getElementById('data-transfer-title').textContent = 'Export Data';
+  document.getElementById('data-transfer-desc').textContent = 'Copy the text below to save or transfer your routines and profiles.';
+  
+  const textArea = document.getElementById('data-transfer-text');
+  textArea.value = jsonString;
+  textArea.readOnly = true;
+
+  const actionBtn = document.getElementById('btn-data-action');
+  actionBtn.textContent = 'Copy to Clipboard';
+  actionBtn.onclick = () => {
+    navigator.clipboard.writeText(jsonString).then(() => {
+      actionBtn.textContent = 'Copied!';
+      setTimeout(() => actionBtn.textContent = 'Copy to Clipboard', 2000);
+    }).catch(() => {
+      alert("Clipboard access denied. Please copy the text manually.");
+    });
+  };
+
+  document.getElementById('modal-data-transfer').classList.remove('hidden');
+};
+
+// --- Data Import ---
+document.getElementById('btn-import-data').onclick = () => {
+  document.getElementById('data-transfer-title').textContent = 'Import Data';
+  document.getElementById('data-transfer-desc').textContent = 'Paste your previously exported data below. WARNING: This will overwrite all current profiles and routines.';
+  
+  const textArea = document.getElementById('data-transfer-text');
+  textArea.value = '';
+  textArea.readOnly = false;
+
+  const actionBtn = document.getElementById('btn-data-action');
+  actionBtn.textContent = 'Import & Overwrite';
+  actionBtn.onclick = async () => {
+    try {
+      const importedData = JSON.parse(textArea.value.trim());
+      
+      // Basic validation to ensure the pasted data is formatted correctly
+      if (!importedData.profiles || !importedData.routines) {
+        throw new Error("Invalid data format.");
+      }
+
+      window.customConfirm("Overwrite all data? This cannot be undone.", async () => {
+        // Clear existing data in IndexedDB
+        const tx = db.transaction(['profiles', 'routines'], 'readwrite');
+        tx.objectStore('profiles').clear();
+        tx.objectStore('routines').clear();
+
+        tx.oncomplete = async () => {
+          // Push new data into the DB
+          for (const p of importedData.profiles) await dbPut('profiles', p);
+          for (const r of importedData.routines) await dbPut('routines', r);
+
+          // Refresh in-memory arrays
+          profiles = await dbGetAll('profiles');
+          routines = await dbGetAll('routines');
+
+          document.getElementById('modal-data-transfer').classList.add('hidden');
+          renderParentDash();
+          alert("Data imported successfully!");
+        };
+      });
+    } catch (e) {
+      alert("Error parsing data. Please make sure you pasted the exact text from an export.");
+    }
+  };
+
+  document.getElementById('modal-data-transfer').classList.remove('hidden');
+};
+
 // ==========================================
 // 6. Kids Hub & Modal Management
 // ==========================================
