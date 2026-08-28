@@ -323,18 +323,27 @@ async function renderParentDash() {
     div.innerHTML = `${p.name} <button onclick="deleteProfile('${p.id}')">Del</button>`;
     pList.appendChild(div);
   });
-    const rList = document.getElementById('parent-routine-list');
-  rList.innerHTML = '';
+      const rList = document.getElementById('parent-routine-list');
+    rList.innerHTML = '';
   routines.forEach((r, i) => {
     const div = document.createElement('div');
-    div.innerHTML = `${r.name}
-      <span class="arrow-group">
-        <button class="move-btn" onclick="moveRoutine(${i}, -1)">▲</button>
-        <button class="move-btn" onclick="moveRoutine(${i}, 1)">▼</button>
-      </span> 
-      <button onclick="editRoutine('${r.id}')">Edit</button> 
-      <button onclick="duplicateRoutine('${r.id}')">Copy</button> 
-      <button onclick="deleteRoutine('${r.id}')">Del</button>`;
+    div.className = 'task-panel'; 
+    div.dataset.index = i;
+    
+    div.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+        <span style="flex: 1; font-weight: bold;">${r.name}</span>
+        <button onclick="editRoutine('${r.id}')">Edit</button> 
+        <button onclick="duplicateRoutine('${r.id}')">Copy</button> 
+        <button onclick="deleteRoutine('${r.id}')" style="background: #dd3938; color: white;">Del</button>
+        <span class="drag-handle" title="Drag to reorder">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <circle cx="8" cy="6" r="2"></circle><circle cx="16" cy="6" r="2"></circle>
+            <circle cx="8" cy="12" r="2"></circle><circle cx="16" cy="12" r="2"></circle>
+            <circle cx="8" cy="18" r="2"></circle><circle cx="16" cy="18" r="2"></circle>
+          </svg>
+        </span>
+      </div>`;
     rList.appendChild(div);
   });
 }
@@ -365,20 +374,6 @@ window.duplicateRoutine = async (id) => {
   routines.push(clone);
   renderParentDash();
 };
-
-window.moveRoutine = async (index, dir) => {
-  if (index + dir < 0 || index + dir >= routines.length) return;
-  const temp = routines[index];
-  routines[index] = routines[index + dir];
-  routines[index + dir] = temp;
-  routines.forEach((r, idx) => {
-    r.order = idx;
-  });
-  await dbPut('routines', routines[index]);
-  await dbPut('routines', routines[index + dir]);
-  renderParentDash();
-};
-
 
 let currentEditingRoutine = null;
 document.getElementById('btn-new-routine').onclick = () => {
@@ -416,25 +411,64 @@ function renderBuilder() {
   tList.innerHTML = '';
   currentEditingRoutine.tasks.forEach((t, i) => {
     const div = document.createElement('div');
-    div.className = 'panel';
+    div.className = 'panel task-panel'; 
+    div.dataset.index = i;
     const imgName = t.img ? t.img.split('/').pop() : 'No image';
+    
     div.innerHTML = `
-      <input type="text" value="${t.name}" onchange="currentEditingRoutine.tasks[${i}].name = this.value" placeholder="Task Name">
-      <input type="number" value="${t.minTime}" onchange="currentEditingRoutine.tasks[${i}].minTime = parseInt(this.value)" placeholder="Min Time (sec)">
-      <input type="number" value="${t.maxTime}" onchange="currentEditingRoutine.tasks[${i}].maxTime = parseInt(this.value)" placeholder="Max Time (sec)">
-      <select onchange="currentEditingRoutine.tasks[${i}].skipBehavior = this.value">
-        <option value="none" ${t.skipBehavior === 'none' ? 'selected' : ''}>Cannot Skip</option>
-        <option value="skip" ${t.skipBehavior === 'skip' ? 'selected' : ''}>Skip Completely</option>
-        <option value="defer" ${t.skipBehavior === 'defer' ? 'selected' : ''}>Skip & Defer</option>
-      </select>
-      <div style="margin: 10px 0;">
-        <button class="btn-choose-img" onclick="openImagePicker(${i})">Choose Image</button>
-        <span class="task-img-label">${imgName}</span>
+      <div class="task-header">
+        <input type="text" value="${t.name}" onchange="currentEditingRoutine.tasks[${i}].name = this.value" placeholder="Task Name" class="task-name-input">
+        
+        <div class="task-actions">
+          <span class="toggle-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+          <span class="drag-handle" title="Drag to reorder">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <circle cx="8" cy="6" r="2"></circle><circle cx="16" cy="6" r="2"></circle>
+              <circle cx="8" cy="12" r="2"></circle><circle cx="16" cy="12" r="2"></circle>
+              <circle cx="8" cy="18" r="2"></circle><circle cx="16" cy="18" r="2"></circle>
+            </svg>
+          </span>
+        </div>
       </div>
-      <button onclick="moveTask(${i}, -1)">Up</button>
-      <button onclick="moveTask(${i}, 1)">Down</button>
-      <button onclick="removeTask(${i})">Del</button>
+      
+      <div class="task-details-wrapper">
+        <div class="task-details">
+          <div class="input-group">
+            <label>Min Time (sec)</label>
+            <input type="number" value="${t.minTime}" onchange="currentEditingRoutine.tasks[${i}].minTime = parseInt(this.value)">
+          </div>
+          <div class="input-group">
+            <label>Max Time (sec)</label>
+            <input type="number" value="${t.maxTime}" onchange="currentEditingRoutine.tasks[${i}].maxTime = parseInt(this.value)">
+          </div>
+          <div class="input-group full-width">
+            <label>Skip Behavior</label>
+            <select onchange="currentEditingRoutine.tasks[${i}].skipBehavior = this.value">
+              <option value="none" ${t.skipBehavior === 'none' ? 'selected' : ''}>Cannot Skip</option>
+              <option value="skip" ${t.skipBehavior === 'skip' ? 'selected' : ''}>Skip Completely</option>
+              <option value="defer" ${t.skipBehavior === 'defer' ? 'selected' : ''}>Skip & Defer</option>
+            </select>
+          </div>
+          <div class="input-group full-width img-picker-group">
+            <button class="btn-choose-img" onclick="openImagePicker(${i})">Choose Image</button>
+            <span class="task-img-label">${imgName}</span>
+          </div>
+          <button class="btn-delete-task full-width" onclick="removeTask(${i})">Delete Task</button>
+        </div>
+      </div>
     `;
+
+    const header = div.querySelector('.task-header');
+
+    header.addEventListener('click', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.closest('.drag-handle')) return;
+      div.classList.toggle('expanded');
+    });
+
     tList.appendChild(div);
   });
 }
@@ -462,13 +496,6 @@ document.getElementById('btn-add-task').onclick = () => {
   renderBuilder();
 };
 
-window.moveTask = (index, dir) => {
-  if (index + dir < 0 || index + dir >= currentEditingRoutine.tasks.length) return;
-  const temp = currentEditingRoutine.tasks[index];
-  currentEditingRoutine.tasks[index] = currentEditingRoutine.tasks[index + dir];
-  currentEditingRoutine.tasks[index + dir] = temp;
-  renderBuilder();
-};
 window.removeTask = (index) => { currentEditingRoutine.tasks.splice(index, 1); renderBuilder(); };
 
 document.getElementById('btn-save-routine').onclick = async () => {
@@ -652,7 +679,132 @@ window.customConfirm = (msg, onYes) => {
   document.getElementById('btn-confirm-yes').onclick = () => { modal.classList.add('hidden'); onYes(); };
   document.getElementById('btn-confirm-no').onclick = () => { modal.classList.add('hidden'); };
 };
-function setupEventListeners() {}
+
+function enableDragAndDrop(container, onDrop) {
+  let isDragging = false;
+  let dragEl = null;
+  let dragStartY = 0;
+  let dragStartIndex = -1;
+  let dragCurrentIndex = -1;
+  let dragSiblings = [];
+  let shiftHeight = 0;
+
+  container.addEventListener('pointerdown', (e) => {
+    if (!e.target.classList.contains('drag-handle')) return;
+    
+    dragEl = e.target.closest('.task-panel');
+    if (!dragEl) return;
+    
+    e.preventDefault(); 
+    dragEl.setPointerCapture(e.pointerId);
+    isDragging = true;
+    
+    dragStartY = e.clientY;
+    dragStartIndex = parseInt(dragEl.dataset.index);
+    dragCurrentIndex = dragStartIndex;
+    
+    const style = window.getComputedStyle(dragEl);
+    shiftHeight = dragEl.offsetHeight + parseInt(style.marginBottom || 0) + parseInt(style.marginTop || 0);
+
+    dragEl.classList.add('dragging');
+
+    const panels = Array.from(container.querySelectorAll('.task-panel'));
+    dragSiblings = panels.map((panel, idx) => ({
+      el: panel,
+      index: idx,
+      midY: panel.getBoundingClientRect().top + (panel.offsetHeight / 2)
+    }));
+  });
+
+  container.addEventListener('pointermove', (e) => {
+    if (!isDragging || !dragEl) return;
+
+    const deltaY = e.clientY - dragStartY;
+    dragEl.style.transform = `translateY(${deltaY}px)`;
+
+    const pointerY = e.clientY;
+    let newIndex = dragStartIndex;
+
+    dragSiblings.forEach(sibling => {
+      if (sibling.index === dragStartIndex) return;
+      if (dragStartIndex < sibling.index && pointerY > sibling.midY) {
+        newIndex = Math.max(newIndex, sibling.index);
+      }
+      if (dragStartIndex > sibling.index && pointerY < sibling.midY) {
+        newIndex = Math.min(newIndex, sibling.index);
+      }
+    });
+
+    dragSiblings.forEach(sibling => {
+      if (sibling.index === dragStartIndex) return;
+
+      let shift = 0;
+      if (sibling.index > dragStartIndex && sibling.index <= newIndex) {
+        shift = -shiftHeight;
+      } else if (sibling.index < dragStartIndex && sibling.index >= newIndex) {
+        shift = shiftHeight;
+      }
+
+      sibling.el.style.transform = `translateY(${shift}px)`;
+    });
+
+    dragCurrentIndex = newIndex;
+  });
+
+  const stopDrag = (e) => {
+    if (!isDragging || !dragEl) return;
+    isDragging = false;
+    dragEl.releasePointerCapture(e.pointerId);
+    dragEl.classList.remove('dragging');
+    
+    dragSiblings.forEach(sibling => sibling.el.style.transform = '');
+    dragEl.style.transform = '';
+
+    if (dragStartIndex !== dragCurrentIndex) {
+      onDrop(dragStartIndex, dragCurrentIndex);
+    }
+    
+    dragEl = null;
+    dragSiblings = [];
+  };
+
+  container.addEventListener('pointerup', stopDrag);
+  container.addEventListener('pointercancel', stopDrag);
+}
+
+function setupEventListeners() {
+  // 1. Task Builder Drag and Drop
+  const builderList = document.getElementById('builder-task-list');
+  if (builderList) {
+    enableDragAndDrop(builderList, (oldIndex, newIndex) => {
+      const movedTask = currentEditingRoutine.tasks.splice(oldIndex, 1)[0];
+      currentEditingRoutine.tasks.splice(newIndex, 0, movedTask);
+      renderBuilder(); 
+    });
+  }
+
+  // 2. Parent Dashboard Routine Drag and Drop
+  const parentRoutineList = document.getElementById('parent-routine-list');
+  if (parentRoutineList) {
+    enableDragAndDrop(parentRoutineList, async (oldIndex, newIndex) => {
+      // Reorder the array in memory
+      const movedRoutine = routines.splice(oldIndex, 1)[0];
+      routines.splice(newIndex, 0, movedRoutine);
+      
+      // Update the 'order' property for all routines to match their new array index
+      const dbUpdates = routines.map((r, idx) => {
+        r.order = idx;
+        return dbPut('routines', r); 
+      });
+      
+      // Run all IndexedDB saves concurrently
+      await Promise.all(dbUpdates);
+      
+      // Commit changes to DOM
+      renderParentDash(); 
+    });
+  }
+}
 
 // ==========================================
 // 7. Routine Execution (The Core Engine)
